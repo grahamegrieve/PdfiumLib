@@ -1,3 +1,7 @@
+{$IFDEF FPC}
+{$MODE DELPHI}
+{$ENDIF}
+
 {$A8,B-,E-,F-,G+,H+,I+,J-,K-,M-,N-,P+,Q-,R-,S-,T-,U-,V+,X+,Z1}
 {$STRINGCHECKS OFF}
 
@@ -237,7 +241,7 @@ type
     function FormUndo: Boolean;
     function FormRedo: Boolean;
 
-    function BeginFind(const SearchString: string; MatchCase, MatchWholeWord: Boolean; FromEnd: Boolean): Boolean;
+    function BeginFind(const SearchString: WideString; MatchCase, MatchWholeWord: Boolean; FromEnd: Boolean): Boolean;
     function FindNext(var CharIndex, Count: Integer): Boolean;
     function FindPrev(var CharIndex, Count: Integer): Boolean;
     procedure EndFind;
@@ -249,7 +253,7 @@ type
     function GetCharIndexAt(PageX, PageY, ToleranceX, ToleranceY: Double): Integer;
     function ReadText(CharIndex, Count: Integer): string;
     function GetTextAt(const R: TPdfRect): string; overload;
-    function GetTextAt(Left, Top, Right, Bottom: Double): string; overload;
+    function GetTextAt(Left, Top, Right, Bottom: Double): WideString; overload;
 
     function GetTextRectCount(CharIndex, Count: Integer): Integer;
     function GetTextRect(RectIndex: Integer): TPdfRect;
@@ -257,7 +261,7 @@ type
     function HasFormFieldAtPoint(X, Y: Double): TPdfFormFieldType;
 
     function GetWebLinkCount: Integer;
-    function GetWebLinkURL(LinkIndex: Integer): string;
+    function GetWebLinkURL(LinkIndex: Integer): WideString;
     function GetWebLinkRectCount(LinkIndex: Integer): Integer;
     function GetWebLinkRect(LinkIndex, RectIndex: Integer): TPdfRect;
 
@@ -296,10 +300,10 @@ type
     procedure GetContent(var ABytes: TBytes); overload;
     procedure GetContent(Buffer: PByte); overload; // use ContentSize to allocate enough memory
     procedure GetContent(var Value: RawByteString); overload;
-    procedure GetContent(var Value: string; Encoding: TEncoding = nil); overload;
+    procedure GetContent(var Value: WideString; Encoding: TEncoding = nil); overload;
     function GetContentAsBytes: TBytes;
     function GetContentAsRawByteString: RawByteString;
-    function GetContentAsString(Encoding: TEncoding = nil): string; // Default-encoding is UTF-8
+    function GetContentAsString(Encoding: TEncoding = nil): WideString; // Default-encoding is UTF-8
 
     procedure SaveToStream(Stream: TStream);
     procedure SaveToFile(const FileName: string);
@@ -549,7 +553,7 @@ type
   TEncodingAccess = class(TEncoding)
   public
     function GetMemCharCount(Bytes: PByte; ByteCount: Integer): Integer;
-    function GetMemChars(Bytes: PByte; ByteCount: Integer; Chars: PChar; CharCount: Integer): Integer;
+    function GetMemChars(Bytes: PByte; ByteCount: Integer; Chars: PWideChar; CharCount: Integer): Integer;
   end;
 
 function TEncodingAccess.GetMemCharCount(Bytes: PByte; ByteCount: Integer): Integer;
@@ -557,7 +561,7 @@ begin
   Result := GetCharCount(Bytes, ByteCount);
 end;
 
-function TEncodingAccess.GetMemChars(Bytes: PByte; ByteCount: Integer; Chars: PChar; CharCount: Integer): Integer;
+function TEncodingAccess.GetMemChars(Bytes: PByte; ByteCount: Integer; Chars: PWideChar; CharCount: Integer): Integer;
 begin
   Result := GetChars(Bytes, ByteCount, Chars, CharCount);
 end;
@@ -673,8 +677,11 @@ begin
 end;
 
 procedure RaiseLastPdfError;
+var
+  ret : Longword;
 begin
-  case FPDF_GetLastError of
+  ret := FPDF_GetLastError;
+  case ret of
     FPDF_ERR_SUCCESS:
       raise EPdfException.CreateRes(@RsPdfErrorSuccess);
     FPDF_ERR_FILE:
@@ -1919,7 +1926,7 @@ begin
   Result := FLinkHandle <> nil;
 end;
 
-function TPdfPage.BeginFind(const SearchString: string; MatchCase, MatchWholeWord,
+function TPdfPage.BeginFind(const SearchString: WideString; MatchCase, MatchWholeWord,
   FromEnd: Boolean): Boolean;
 var
   Flags, StartIndex: Integer;
@@ -1938,7 +1945,7 @@ begin
     else
       StartIndex := 0;
 
-    FSearchHandle := FPDFText_FindStart(FTextHandle, PChar(SearchString), Flags, StartIndex);
+    FSearchHandle := FPDFText_FindStart(FTextHandle, PWideChar(SearchString), Flags, StartIndex);
   end;
   Result := FSearchHandle <> nil;
 end;
@@ -2033,7 +2040,7 @@ begin
   if (Count > 0) and BeginText then
   begin
     SetLength(Result, Count); // we let GetText overwrite our #0 terminator with its #0
-    Len := FPDFText_GetText(FTextHandle, CharIndex, Count, PChar(Result)) - 1; // returned length includes the #0
+    Len := FPDFText_GetText(FTextHandle, CharIndex, Count, PWideChar(Result)) - 1; // returned length includes the #0
     if Len <= 0 then
       Result := ''
     else if Len < Count then
@@ -2043,7 +2050,7 @@ begin
     Result := '';
 end;
 
-function TPdfPage.GetTextAt(Left, Top, Right, Bottom: Double): string;
+function TPdfPage.GetTextAt(Left, Top, Right, Bottom: Double): Widestring;
 var
   Len: Integer;
 begin
@@ -2052,7 +2059,7 @@ begin
     Len := FPDFText_GetBoundedText(FTextHandle, Left, Top, Right, Bottom, nil, 0); // excluding #0 terminator
     SetLength(Result, Len);
     if Len > 0 then
-      FPDFText_GetBoundedText(FTextHandle, Left, Top, Right, Bottom, PChar(Result), Len);
+      FPDFText_GetBoundedText(FTextHandle, Left, Top, Right, Bottom, PWideChar(Result), Len);
   end
   else
     Result := '';
@@ -2091,7 +2098,7 @@ begin
     Result := 0;
 end;
 
-function TPdfPage.GetWebLinkURL(LinkIndex: Integer): string;
+function TPdfPage.GetWebLinkURL(LinkIndex: Integer): WideString;
 var
   Len: Integer;
 begin
@@ -2102,7 +2109,7 @@ begin
     if Len > 0 then
     begin
       SetLength(Result, Len);
-      FPDFLink_GetURL(FLinkHandle, LinkIndex, PChar(Result), Len + 1); // including #0 terminator
+      FPDFLink_GetURL(FLinkHandle, LinkIndex, PWideChar(Result), Len + 1); // including #0 terminator
     end;
   end;
 end;
@@ -2722,7 +2729,7 @@ begin
   end;
 end;
 
-procedure TPdfAttachment.GetContent(var Value: string; Encoding: TEncoding);
+procedure TPdfAttachment.GetContent(var Value: WideString; Encoding: TEncoding);
 var
   Size: Integer;
   OutBufLen: LongWord;
@@ -2802,7 +2809,7 @@ begin
   GetContent(Result);
 end;
 
-function TPdfAttachment.GetContentAsString(Encoding: TEncoding): string;
+function TPdfAttachment.GetContentAsString(Encoding: TEncoding): WideString;
 begin
   GetContent(Result, Encoding);
 end;

@@ -1,3 +1,7 @@
+{$IFDEF FPC}
+{$MODE DELPHI}
+{$ENDIF}
+
 {$A8,B-,E-,F-,G+,H+,I+,J-,K-,M-,N-,P+,Q-,R-,S-,T-,U-,V+,X+,Z1}
 {$STRINGCHECKS OFF} // It only slows down Delphi strings in Delphi 2009/2010
 
@@ -19,11 +23,15 @@ unit PdfiumLib;
 interface
 
 uses
+  {$IFDEF FPC}
+  Windows;
+  {$ELSE}
   {$IF CompilerVersion >= 23.0} // XE2+
   WinApi.Windows;
   {$ELSE}
   Windows;
   {$IFEND}
+  {$ENDIF}
 
 type
   // Delphi version compatibility types
@@ -8674,11 +8682,13 @@ begin
   if PdfiumModule <> 0 then
     Exit;
 
+  {$IFNDEF FPC}
   {$IFDEF CPUX64}
   // Pdfium requires all arithmetic exceptions to be masked in 64bit mode
   if GetExceptionMask <> exAllArithmeticExceptions then
     SetExceptionMask(exAllArithmeticExceptions);
   {$ENDIF CPUX64}
+  {$ENDIF}
 
   if DllFileName <> '' then
     PdfiumModule := SafeLoadLibrary(DllFileName)
@@ -8687,6 +8697,9 @@ begin
 
   if PdfiumModule = 0 then
   begin
+    {$IFDEF FPC}
+    RaiseLastOSError;
+    {$ELSE}
     {$IF CompilerVersion >= 24.0} // XE3+
     if DllFileName <> '' then
       RaiseLastOSError(GetLastError, '.'#10#10 + DllFileName)
@@ -8694,7 +8707,8 @@ begin
       RaiseLastOSError(GetLastError, '.'#10#10 + pdfium_dll);
     {$ELSE}
     RaiseLastOSError;
-    {$IFEND}
+    {$ENDIF}
+    {$ENDIF}
   end;
 
   for I := 0 to Length(ImportFuncs) - 1 do

@@ -1,3 +1,7 @@
+{$IFDEF FPC}
+{$MODE DELPHI}
+{$ENDIF}
+
 {$A8,B-,E-,F-,G+,H+,I+,J-,K-,M-,N-,P+,Q-,R-,S-,T-,U-,V+,X+,Z1}
 {$STRINGCHECKS OFF}
 
@@ -37,9 +41,11 @@ type
     FDrawWidth: Integer;
     FDrawHeight: Integer;
     FRotation: TPdfPageRotation;
+    {$IFNDEF FPC}
     {$IF CompilerVersion <= 20.0} // 2009
     FPrintClient: Boolean;
     {$IFEND}
+    {$ENDIF}
     FMousePressed: Boolean;
     FSelectionActive: Boolean;
     FAllowUserTextSelection: Boolean;
@@ -79,9 +85,11 @@ type
     procedure WMEraseBkgnd(var Message: TWMEraseBkgnd); message WM_ERASEBKGND;
     procedure WMGetDlgCode(var Message: TWMGetDlgCode); message WM_GETDLGCODE;
     procedure CMColorchanged(var Message: TMessage); message CM_COLORCHANGED;
+    {$IFNDEF FPC}
     {$IF CompilerVersion <= 20.0} // 2009
     procedure WMPrintClient(var Message: TWMPrintClient); message WM_PRINTCLIENT;
     {$IFEND}
+    {$ENDIF}
     procedure CMMouseleave(var Message: TMessage); message CM_MOUSELEAVE;
 
     procedure GetPageWebLinks;
@@ -251,7 +259,9 @@ type
     property OnKeyDown;
     property OnKeyPress;
     property OnKeyUp;
+    {$IFNDEF FPC}
     property OnMouseActivate;
+    {$ENDIF}
     property OnMouseDown;
     property OnMouseEnter;
     property OnMouseLeave;
@@ -260,10 +270,12 @@ type
     property OnPaint: TNotifyEvent read FOnPaint write FOnPaint;
     property OnStartDock;
     property OnStartDrag;
+    {$IFNDEF FPC}
     {$IF CompilerVersion >= 21.0} // 2010+
     property Touch;
     property OnGesture;
     {$IFEND}
+    {$ENDIF}
   end;
 
   TPdfDocumentVclPrinter = class(TPdfDocumentPrinter)
@@ -281,9 +293,11 @@ type
       If AShowPrintDialog is true the print dialog is shown and the user can select the
       printer, page range and number of copies (if supported by the printer driver).
       Returns true if the page was send to the printer driver. }
+    {$IFNDEF FPC}
     class function PrintDocument(ADocument: TPdfDocument; const AJobTitle: string; 
       AShowPrintDialog: Boolean = True; AllowPageRange: Boolean = True; 
       AParentWnd: HWND = 0): Boolean; static;
+    {$ENDIF}
   end;
 
 implementation
@@ -299,11 +313,15 @@ const
 
 function IsWhitespace(Ch: Char): Boolean;
 begin
+  {$IFDEF FPC}
+  Result := TCharacter.IsWhiteSpace(Ch);
+  {$ELSE}
   {$IF CompilerVersion >= 25.0} // XE4
   Result := Ch.IsWhiteSpace;
   {$ELSE}
   Result := TCharacter.IsWhiteSpace(Ch);
   {$IFEND}
+  {$ENDIF}
 end;
 
 function VclAbortProc(Prn: HDC; Error: Integer): Bool; stdcall;
@@ -365,9 +383,14 @@ end;
 
 function TPdfDocumentVclPrinter.GetPrinterDC: HDC;
 begin
+  {$IFDEF FPC}
+  result := 0;
+  {$ELSE}
   Result := Printer.Handle;
+  {$ENDIF}
 end;
 
+{$IFNDEF FPC}
 class function TPdfDocumentVclPrinter.PrintDocument(ADocument: TPdfDocument;
   const AJobTitle: string; AShowPrintDialog, AllowPageRange: Boolean; AParentWnd: HWND): Boolean;
 var
@@ -428,6 +451,7 @@ begin
     PdfPrinter.Free;
   end;
 end;
+{$ENDIF}
 
 { TPdfControl }
 
@@ -483,6 +507,7 @@ begin
   inherited DestroyWnd;
 end;
 
+{$IFNDEF FPC}
 {$IF CompilerVersion <= 20.0} // 2009
 procedure TPdfControl.WMPrintClient(var Message: TWMPrintClient);
 // Emulate Delphi 2010's TControlState.csPrintClient
@@ -498,6 +523,7 @@ begin
   end;
 end;
 {$IFEND}
+{$ENDIF}
 
 procedure TPdfControl.WMEraseBkgnd(var Message: TWMEraseBkgnd);
 begin
@@ -528,10 +554,12 @@ begin
       for I := 0 to Count - 1 do
       begin
         R := InternPageToDevice(Page, ARects[I]);
+        {$IFNDEF FPC}
         if RectVisible(DC, R) then
           AlphaBlend(DC, R.Left, R.Top, R.Right - R.Left, R.Bottom - R.Top,
                      BmpDC, 0, 0, SelBmp.Width, SelBmp.Height,
                      BlendFunc);
+        {$ENDIF}
       end;
     finally
       SelBmp.Free;
@@ -583,10 +611,12 @@ begin
       for I := 0 to Length(FHighlightTextRects) - 1 do
       begin
         R := InternPageToDevice(Page, FHighlightTextRects[I]);
+        {$IFNDEF FPC}
         if RectVisible(DC, R) then
           AlphaBlend(DC, R.Left, R.Top, R.Right - R.Left, R.Bottom - R.Top,
                      BmpDC, 0, 0, SelBmp.Width, SelBmp.Height,
                      BlendFunc);
+        {$ENDIF}
       end;
     finally
       SelBmp.Free;
@@ -735,11 +765,16 @@ begin
 
       // copy the clipping region and adjust to the bitmap's device units
       Rgn := CreateRectRgn(0, 0, 1, 1);
+      {$IFDEF FPC}
+      if false then
+      {$ELSE}
       {$IF CompilerVersion >= 21.0} // 2010+
       if csPrintClient in ControlState then
       {$ELSE}
       if FPrintClient then
       {$IFEND}
+      {$ENDIF}
+
       begin
         if GetClipRgn(DC, Rgn) = 1 then // application clip region
         begin
@@ -2172,7 +2207,7 @@ begin
     AdjustDrawPos; // adjust DrawX/DrawY for ScrollWindowEx
     Flags := 0;
     if Smooth then
-      Flags := Flags or SW_SMOOTHSCROLL or (150 shl 16);
+      Flags := Flags or {$IFNDEF FPC} SW_SMOOTHSCROLL or {$ENDIF} (150 shl 16);
     ScrollWindowEx(Handle, XOffset, YOffset, nil, nil, 0, nil, SW_INVALIDATE or Flags);
     UpdateWindow(Handle);
     Result := True;
