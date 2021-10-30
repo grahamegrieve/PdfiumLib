@@ -10,7 +10,8 @@ unit PdfiumCore;
 interface
 
 uses
-  Windows, WinSpool, Types, SysUtils, Classes, Contnrs, PdfiumLib, Graphics;
+  {$IFDEF MSWINDOWS}Windows, WinSpool, {$ENDIF}
+  Types, SysUtils, Classes, Contnrs, PdfiumLib, Graphics;
 
 const
   // DIN A4

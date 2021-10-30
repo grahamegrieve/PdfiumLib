@@ -24,7 +24,11 @@ interface
 
 uses
   {$IFDEF FPC}
+  {$IFDEF WINDOWS}
   Windows;
+  {$ELSE}
+  Types;
+  {$ENDIF}
   {$ELSE}
   {$IF CompilerVersion >= 23.0} // XE2+
   WinApi.Windows;
@@ -43,6 +47,13 @@ type
   {$IFEND}
   TIME_T = Longint;
   PTIME_T = ^TIME_T;
+  {$IFDEF FPC}
+  {$IFNDEF WINDOWS}
+  UInt = UInt32;
+  PUInt = ^UInt;
+  LParam = ^Integer;
+  {$ENDIF}
+  {$ENDIF}
 
 
 // *** _FPDFVIEW_H_ ***
@@ -8156,9 +8167,9 @@ const
     + 2
       {$IFDEF PDFIUM_PRINT_TEXT_WITH_GDI} + 2 {$ENDIF}
       {$IFDEF _SKIA_SUPPORT_            } + 2 {$ENDIF}
-      {$IFDEF PDF_ENABLE_V8             } + 3 {$ENDIF}
-      {$IFDEF PDF_ENABLE_XFA            } + 3 {$ENDIF}
     {$ENDIF}
+    {$IFDEF PDF_ENABLE_V8             } + 3 {$ENDIF}
+    {$IFDEF PDF_ENABLE_XFA            } + 3 {$ENDIF}
     ] of TImportFuncRec = (
 
     // *** _FPDFVIEW_H_ ***
@@ -8168,10 +8179,10 @@ const
     (P: @@FPDF_SetSandBoxPolicy;                      N: 'FPDF_SetSandBoxPolicy'),
     {$IFDEF MSWINDOWS}
       {$IFDEF PDFIUM_PRINT_TEXT_WITH_GDI}
-    (P: @@FPDF_SetTypefaceAccessibleFunc;             N: 'FPDF_SetTypefaceAccessibleFunc'),
+   ! (P: @@FPDF_SetTypefaceAccessibleFunc;             N: 'FPDF_SetTypefaceAccessibleFunc'),
     (P: @@FPDF_SetPrintTextWithGDI;                   N: 'FPDF_SetPrintTextWithGDI'),
       {$ENDIF PDFIUM_PRINT_TEXT_WITH_GDI}
-    (P: @@FPDF_SetPrintMode;                          N: 'FPDF_SetPrintMode'),
+  !  (P: @@FPDF_SetPrintMode;                          N: 'FPDF_SetPrintMode'),
     {$ENDIF MSWINDOWS}
     (P: @@FPDF_LoadDocument;                          N: 'FPDF_LoadDocument'),
     (P: @@FPDF_LoadMemDocument;                       N: 'FPDF_LoadMemDocument'),
@@ -8193,12 +8204,12 @@ const
     (P: @@FPDF_GetPageSizeByIndexF;                   N: 'FPDF_GetPageSizeByIndexF'),
     (P: @@FPDF_GetPageSizeByIndex;                    N: 'FPDF_GetPageSizeByIndex'),
     {$IFDEF MSWINDOWS}
-    (P: @@FPDF_RenderPage;                            N: 'FPDF_RenderPage'),
+  !  (P: @@FPDF_RenderPage;                            N: 'FPDF_RenderPage'),
     {$ENDIF MSWINDOWS}
     (P: @@FPDF_RenderPageBitmap;                      N: 'FPDF_RenderPageBitmap'),
     (P: @@FPDF_RenderPageBitmapWithMatrix;            N: 'FPDF_RenderPageBitmapWithMatrix'),
     {$IFDEF _SKIA_SUPPORT_}
-    (P: @@FPDF_RenderPageSkp;                         N: 'FPDF_RenderPageSkp'),
+  !  (P: @@FPDF_RenderPageSkp;                         N: 'FPDF_RenderPageSkp'),
     {$ENDIF _SKIA_SUPPORT_}
     (P: @@FPDF_ClosePage;                             N: 'FPDF_ClosePage'),
     (P: @@FPDF_CloseDocument;                         N: 'FPDF_CloseDocument'),
@@ -8495,7 +8506,7 @@ const
     (P: @@FPDF_RemoveFormFieldHighlight;              N: 'FPDF_RemoveFormFieldHighlight'),
     (P: @@FPDF_FFLDraw;                               N: 'FPDF_FFLDraw'),
     {$IFDEF _SKIA_SUPPORT_}
-    (P: @@FPDF_FFLRecord;                             N: 'FPDF_FFLRecord'),
+  !  (P: @@FPDF_FFLRecord;                             N: 'FPDF_FFLRecord'),
     {$ENDIF _SKIA_SUPPORT_}
 
     (P: @@FPDF_GetFormType;                           N: 'FPDF_GetFormType'),
