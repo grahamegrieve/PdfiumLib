@@ -8674,6 +8674,10 @@ begin
     InitPDFiumEx(''{$IFDEF PDF_ENABLE_V8}, ResPath{$ENDIF});
 end;
 
+{$IFDEF FPC}
+const exAllArithmeticExceptions = [exInvalidOp, exDenormalized, exZeroDivide, exOverflow, exUnderflow, exPrecision];
+{$ENDIF}
+
 procedure InitPDFiumEx(const DllFileName: string{$IFDEF PDF_ENABLE_V8}; const ResPath: string{$ENDIF});
 var
   I: Integer;
@@ -8682,13 +8686,12 @@ begin
   if PdfiumModule <> 0 then
     Exit;
 
-  {$IFNDEF FPC}
   {$IFDEF CPUX64}
   // Pdfium requires all arithmetic exceptions to be masked in 64bit mode
   if GetExceptionMask <> exAllArithmeticExceptions then
     SetExceptionMask(exAllArithmeticExceptions);
   {$ENDIF CPUX64}
-  {$ENDIF}
+
 
   if DllFileName <> '' then
     PdfiumModule := SafeLoadLibrary(DllFileName)

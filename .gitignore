@@ -58,3 +58,7 @@ __history/
 /Source/__recovery
 /Package/backup
 /Source/backup
+/Example/ConverterBackup
+/Example/backup
+/Example/lib/x86_64-win64
+/Package/lib/x86_64-win64

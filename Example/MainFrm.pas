@@ -1,11 +1,18 @@
 unit MainFrm;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
+
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, PdfiumCore, Vcl.ExtCtrls, Vcl.StdCtrls, PdfiumCtrl,
-  Vcl.Samples.Spin, Vcl.ComCtrls;
+  Windows, Messages, SysUtils, Variants,
+  Classes, Graphics, Controls, Forms, Dialogs,
+  {$IFDEF FPC}
+  PrintersDlgs,
+  {$ENDIF}
+  PdfiumCore, ExtCtrls, StdCtrls, PdfiumCtrl, Spin, ComCtrls;
 
 type
   TfrmMain = class(TForm)
@@ -46,9 +53,13 @@ var
 implementation
 
 uses
-  System.TypInfo, Vcl.Printers;
+  TypInfo, Printers;
 
-{$R *.dfm}
+{$IFnDEF FPC}
+  {$R *.dfm}
+{$ELSE}
+  {$R *.lfm}
+{$ENDIF}
 
 procedure TfrmMain.FormCreate(Sender: TObject);
 begin
@@ -74,7 +85,7 @@ begin
 
   if FileExists(ParamStr(1)) then
     FCtrl.LoadFromFile(ParamStr(1))
-  else if OpenDialog1.Execute(Handle) then
+  else if OpenDialog1.Execute then
     FCtrl.LoadFromFile(OpenDialog1.FileName)
   else
   begin
@@ -160,7 +171,7 @@ procedure TfrmMain.btnPrintClick(Sender: TObject);
 {var
   PdfPrinter: TPdfDocumentPrinter;}
 begin
-  TPdfDocumentVclPrinter.PrintDocument(FCtrl.Document, 'PDF Example Print Job');
+ // TPdfDocumentVclPrinter.PrintDocument(FCtrl.Document, 'PDF Example Print Job');
 
 {  PrintDialog1.MinPage := 1;
   PrintDialog1.MaxPage := FCtrl.Document.PageCount;
@@ -190,7 +201,7 @@ begin
   begin
     Att := FCtrl.Document.Attachments[ListViewAttachments.Selected.Index];
     SaveDialog1.FileName := Att.Name;
-    if SaveDialog1.Execute(Handle) then
+    if SaveDialog1.Execute then
       Att.SaveToFile(SaveDialog1.FileName);
   end;
 end;

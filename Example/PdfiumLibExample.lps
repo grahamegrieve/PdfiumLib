@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="12"/>
+    <BuildModes Active="Default"/>
+    <Units>
+      <Unit>
+        <Filename Value="PdfiumLibExample.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <CursorPos Y="18"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="MainFrm.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmMain"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="35" Y="15"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Source\PdfiumCore.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="20"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Source\PdfiumCtrl.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="5"/>
+        <CursorPos Y="6"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\Source\PdfiumLib.pas"/>
+        <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="8662"/>
+        <CursorPos X="31" Y="8678"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\..\tools\fpc\rtl\objpas\math.pp"/>
+        <UnitName Value="Math"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="650"/>
+        <CursorPos X="3" Y="659"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\..\tools\fpc\rtl\inc\mathh.inc"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="40"/>
+        <CursorPos X="58" Y="55"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit>
+    </Units>
+    <JumpHistory HistoryIndex="25">
+      <Position>
+        <Filename Value="MainFrm.pas"/>
+        <Caret Line="8" Column="23"/>
+      </Position>
+      <Position>
+        <Filename Value="PdfiumLibExample.dpr"/>
+        <Caret Line="8" Column="3"/>
+      </Position>
+      <Position>
+        <Filename Value="MainFrm.pas"/>
+        <Caret Line="13" Column="12"/>
+      </Position>
+      <Position>
+        <Filename Value="MainFrm.pas"/>
+        <Caret Line="12" Column="47"/>
+      </Position>
+      <Position>
+        <Filename Value="MainFrm.pas"/>
+        <Caret Line="13" Column="3"/>
+      </Position>
+      <Position>
+        <Filename Value="MainFrm.pas"/>
+        <Caret Line="19" Column="36"/>
+      </Position>
+      <Position>
+        <Filename Value="MainFrm.pas"/>
+        <Caret Line="54" Column="12" TopLine="37"/>
+      </Position>
+      <Position>
+        <Filename Value="MainFrm.pas"/>
+        <Caret Line="5" Column="10"/>
+      </Position>
+      <Position>
+        <Filename Value="MainFrm.pas"/>
+        <Caret Line="86" Column="30" TopLine="70"/>
+      </Position>
+      <Position>
+        <Filename Value="MainFrm.pas"/>
+        <Caret Line="172" Column="4" TopLine="157"/>
+      </Position>
+      <Position>
+        <Filename Value="MainFrm.pas"/>
+        <Caret Line="202" Column="27" TopLine="176"/>
+      </Position>
+      <Position>
+        <Filename Value="MainFrm.pas"/>
+        <Caret Line="23" Column="45"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\PdfiumLib.pas"/>
+        <Caret Line="8696" Column="28" TopLine="8686"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\PdfiumLib.pas"/>
+        <Caret Line="36" Column="23" TopLine="10"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\PdfiumLib.pas"/>
+        <Caret Line="8713" Column="15" TopLine="8683"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\PdfiumLib.pas"/>
+        <Caret Column="12"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\PdfiumLib.pas"/>
+        <Caret Line="26" Column="14"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\PdfiumLib.pas"/>
+        <Caret Line="8690" TopLine="8665"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\PdfiumLib.pas"/>
+        <Caret Line="8687" Column="26" TopLine="8671"/>
+      </Position>
+      <Position>
+        <Filename Value="..\..\..\tools\fpc\rtl\objpas\math.pp"/>
+        <Caret Line="666" Column="10" TopLine="650"/>
+      </Position>
+      <Position>
+        <Filename Value="..\..\..\tools\fpc\rtl\objpas\math.pp"/>
+        <Caret Line="659" Column="3" TopLine="650"/>
+      </Position>
+      <Position>
+        <Filename Value="MainFrm.pas"/>
+        <Caret Line="15" Column="35"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\PdfiumLib.pas"/>
+        <Caret Line="8687" Column="26" TopLine="8671"/>
+      </Position>
+      <Position>
+        <Filename Value="..\..\..\tools\fpc\rtl\objpas\math.pp"/>
+        <Caret Line="666" Column="10" TopLine="650"/>
+      </Position>
+      <Position>
+        <Filename Value="..\..\..\tools\fpc\rtl\objpas\math.pp"/>
+        <Caret Line="659" Column="3" TopLine="650"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\PdfiumLib.pas"/>
+        <Caret Line="8680" TopLine="8671"/>
+      </Position>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes ActiveMode=""/>
+    </RunParams>
+  </ProjectSession>
+</CONFIG>
