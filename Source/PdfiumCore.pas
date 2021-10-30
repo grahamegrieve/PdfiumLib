@@ -179,6 +179,8 @@ type
     Document: TPdfDocument;
   end;
 
+  { TPdfPage }
+
   TPdfPage = class(TObject)
   private
     FDocument: TPdfDocument;
@@ -207,12 +209,10 @@ type
     procedure Close;
     function IsLoaded: Boolean;
 
-    procedure Draw(DC: HDC; X, Y, Width, Height: Integer; Rotate: TPdfPageRotation = prNormal;
-      const Options: TPdfPageRenderOptions = []);
-    procedure DrawToPdfBitmap(APdfBitmap: TPdfBitmap; X, Y, Width, Height: Integer; Rotate: TPdfPageRotation = prNormal;
-      const Options: TPdfPageRenderOptions = []);
-    procedure DrawFormToPdfBitmap(APdfBitmap: TPdfBitmap; X, Y, Width, Height: Integer; Rotate: TPdfPageRotation = prNormal;
-      const Options: TPdfPageRenderOptions = []);
+    procedure Draw(bitmap : TBitmap; Rotate: TPdfPageRotation = prNormal; const Options: TPdfPageRenderOptions = []); overload;
+    procedure Draw(DC: HDC; X, Y, Width, Height: Integer; Rotate: TPdfPageRotation = prNormal; const Options: TPdfPageRenderOptions = []); overload;
+    procedure DrawToPdfBitmap(APdfBitmap: TPdfBitmap; X, Y, Width, Height: Integer; Rotate: TPdfPageRotation = prNormal; const Options: TPdfPageRenderOptions = []);
+    procedure DrawFormToPdfBitmap(APdfBitmap: TPdfBitmap; X, Y, Width, Height: Integer; Rotate: TPdfPageRotation = prNormal; const Options: TPdfPageRenderOptions = []);
 
     function DeviceToPage(X, Y, Width, Height: Integer; DeviceX, DeviceY: Integer; Rotate: TPdfPageRotation = prNormal): TPdfPoint; overload;
     function PageToDevice(X, Y, Width, Height: Integer; PageX, PageY: Double; Rotate: TPdfPageRotation = prNormal): TPoint; overload;
@@ -1781,6 +1781,8 @@ var
   BmpBits: Pointer;
   PdfBmp: TPdfBitmap;
   BmpDC: HDC;
+  vbmp : TBitmap;
+  vbmp2 : TBitmap;
 begin
   Open;
 
@@ -1926,8 +1928,8 @@ begin
   Result := FLinkHandle <> nil;
 end;
 
-function TPdfPage.BeginFind(const SearchString: WideString; MatchCase, MatchWholeWord,
-  FromEnd: Boolean): Boolean;
+function TPdfPage.BeginFind(const SearchString: WideString; MatchCase,
+  MatchWholeWord: Boolean; FromEnd: Boolean): Boolean;
 var
   Flags, StartIndex: Integer;
 begin
@@ -2050,7 +2052,7 @@ begin
     Result := '';
 end;
 
-function TPdfPage.GetTextAt(Left, Top, Right, Bottom: Double): Widestring;
+function TPdfPage.GetTextAt(Left, Top, Right, Bottom: Double): WideString;
 var
   Len: Integer;
 begin
@@ -2381,6 +2383,55 @@ end;
 function TPdfPage.IsLoaded: Boolean;
 begin
   Result := FPage <> nil;
+end;
+
+procedure TPdfPage.Draw(bitmap : TBitmap; Rotate: TPdfPageRotation; const Options: TPdfPageRenderOptions);
+var
+  BitmapInfo: TBitmapInfo;
+  Bmp, OldBmp: HBITMAP;
+  BmpBits: Pointer;
+  PdfBmp: TPdfBitmap;
+  BmpDC: HDC;
+  vbmp : TBitmap;
+begin
+  Open;
+
+  FillChar(BitmapInfo, SizeOf(BitmapInfo), 0);
+  BitmapInfo.bmiHeader.biSize := SizeOf(BitmapInfo);
+  BitmapInfo.bmiHeader.biWidth := bitmap.Width;
+  BitmapInfo.bmiHeader.biHeight := -bitmap.Height;
+  BitmapInfo.bmiHeader.biPlanes := 1;
+  BitmapInfo.bmiHeader.biBitCount := 32;
+  BitmapInfo.bmiHeader.biCompression := BI_RGB;
+  BmpBits := nil;
+  Bmp := CreateDIBSection(bitmap.Canvas.handle, BitmapInfo, DIB_RGB_COLORS, BmpBits, 0, 0);
+  if Bmp <> 0 then
+  begin
+    try
+      PdfBmp := TPdfBitmap.Create(bitmap.Width, bitmap.Height, bfBGRA, BmpBits, bitmap.Width * 4);
+      try
+        if Transparency then
+          PdfBmp.FillRect(0, 0, bitmap.Width, bitmap.Height, $00FFFFFF)
+        else
+          PdfBmp.FillRect(0, 0, bitmap.Width, bitmap.Height, $FFFFFFFF);
+        DrawToPdfBitmap(PdfBmp, 0, 0, bitmap.Width, bitmap.Height, Rotate, Options);
+        DrawFormToPdfBitmap(PdfBmp, 0, 0, bitmap.Width, bitmap.Height, Rotate, Options);
+      finally
+        PdfBmp.Free;
+      end;
+
+      vbmp := TBitmap.Create;
+      try
+        vbmp.Handle := bmp;
+        bitmap.assign(vbmp);
+        bitmap.Canvas.Handle; // ake sure the copy actually happens.
+      finally
+        vbmp.Free;
+      end;
+    finally
+      DeleteObject(Bmp);
+    end;
+  end;
 end;
 
 { _TPdfBitmapHideCtor }
