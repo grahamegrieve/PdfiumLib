@@ -13,7 +13,12 @@ unit PdfiumCtrl;
 interface
 
 uses
-  Windows, Messages, Types, SysUtils, Classes, Graphics, Controls, Forms, Dialogs, PdfiumCore;
+  {$IFDEF MSWINDOWS}
+  Windows,
+  {$ELSE}
+  LCLType, LclIntf,
+  {$ENDIF}
+  Messages, Types, SysUtils, Classes, Graphics, Controls, Forms, Dialogs, PdfiumCore;
 
 const
   cPdfControlDefaultDrawOptions = [];
@@ -79,7 +84,9 @@ type
     FPageShadowPadding: Integer;
     FPageBorderColor: TColor;
 
+    {$IFDEF MSWINDOWS}
     procedure WMTimer(var Message: TWMTimer); message WM_TIMER;
+    {$ENDIF}
     procedure WMVScroll(var Message: TWMVScroll); message WM_VSCROLL;
     procedure WMHScroll(var Message: TWMHScroll); message WM_HSCROLL;
     procedure WMEraseBkgnd(var Message: TWMEraseBkgnd); message WM_ERASEBKGND;
@@ -278,6 +285,7 @@ type
     {$ENDIF}
   end;
 
+  {$IFDEF MSWINDOWS}
   TPdfDocumentVclPrinter = class(TPdfDocumentPrinter)
   private
     FBeginDocCalled: Boolean;
@@ -299,6 +307,7 @@ type
       AParentWnd: HWND = 0): Boolean; static;
     {$ENDIF}
   end;
+  {$ENDIF}
 
 implementation
 
@@ -335,6 +344,7 @@ begin
   Result := not Printer.Aborted;
 end;
 
+{$IFDEF MSWINDOWS}
 { TPdfDocumentVclPrinter }
 
 function TPdfDocumentVclPrinter.PrinterStartDoc(const AJobTitle: string): Boolean;
@@ -452,6 +462,7 @@ begin
   end;
 end;
 {$ENDIF}
+{$ENDIF}
 
 { TPdfControl }
 
@@ -537,7 +548,9 @@ var
   R: TRect;
   BmpDC: HDC;
   SelBmp: TBitmap;
+  {$IFDEF MSWINDOWS}
   BlendFunc: TBlendFunction;
+  {$ENDIF}
 begin
   Count := Length(ARects);
   if Count > 0 then
@@ -546,10 +559,12 @@ begin
     try
       SelBmp.Canvas.Brush.Color := RGB(50, 142, 254);
       SelBmp.SetSize(100, 50);
+      {$IFDEF MSWINDOWS}
       BlendFunc.BlendOp := AC_SRC_OVER;
       BlendFunc.BlendFlags := 0;
       BlendFunc.SourceConstantAlpha := 127;
       BlendFunc.AlphaFormat := 0;
+      {$ENDIF}
       BmpDC := SelBmp.Canvas.Handle;
       for I := 0 to Count - 1 do
       begin
@@ -594,7 +609,9 @@ var
   R: TRect;
   BmpDC: HDC;
   SelBmp: TBitmap;
+  {$IFDEF MSWINDOWS}
   BlendFunc: TBlendFunction;
+  {$ENDIF}
 begin
   if FHighlightTextRects <> nil then
   begin
@@ -602,10 +619,12 @@ begin
     try
       SelBmp.Canvas.Brush.Color := RGB(254, 142, 50);
       SelBmp.SetSize(100, 50);
+      {$IFDEF MSWINDOWS}
       BlendFunc.BlendOp := AC_SRC_OVER;
       BlendFunc.BlendFlags := 0;
       BlendFunc.SourceConstantAlpha := 127;
       BlendFunc.AlphaFormat := 0;
+      {$ENDIF}
       BmpDC := SelBmp.Canvas.Handle;
 
       for I := 0 to Length(FHighlightTextRects) - 1 do
@@ -673,7 +692,9 @@ var
   PageDC: HDC;
   OldPageBmp: HBITMAP;
   bmi: TBitmapInfo;
+  {$IFDEF MSWINDOWS}
   BmpData: Windows.TBitmap;
+  {$ENDIF}
   Bits: Pointer;
 begin
   if DirectDrawPage then
@@ -688,6 +709,7 @@ begin
   end
   else
   begin
+    {$IFDEF MSWINDOWS}
     if (FPageBitmap = 0) or
        (GetObject(FPageBitmap, SizeOf(BmpData), @BmpData) <> SizeOf(BmpData)) or
        (FDrawWidth <> BmpData.bmWidth) or
@@ -710,6 +732,7 @@ begin
         FPageBitmap := CreateDIBSection(DC, bmi, DIB_RGB_COLORS, Bits, 0, 0);
       end;
     end;
+    {$ENDIF}
 
     PageDC := CreateCompatibleDC(DC);
     OldPageBmp := SelectObject(PageDC, FPageBitmap);

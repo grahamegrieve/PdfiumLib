@@ -11,7 +11,8 @@ interface
 
 uses
   {$IFDEF MSWINDOWS}Windows, WinSpool, {$ENDIF}
-  Types, SysUtils, Classes, Contnrs, PdfiumLib, Graphics;
+  Types, SysUtils, Classes, Contnrs, PdfiumLib, Graphics
+  {$IFDEF FPC} {$IFNDEF WINDOWS}, LCLType, LclIntf {$ENDIF} {$ENDIF};
 
 const
   // DIN A4
@@ -349,8 +350,10 @@ type
     FPages: TObjectList;
     FAttachments: TPdfAttachmentList;
     FFileName: string;
+    {$IFDEF MSWINDOWS}
     FFileHandle: THandle;
     FFileMapping: THandle;
+    {$ENDIF}
     FBuffer: PByte;
     FBytes: TBytes;
     FClosing: Boolean;
@@ -423,9 +426,11 @@ type
     function GetFileIdentifier(IdType: TPdfFileIdType): string;
     function GetMetaText(const TagName: string): string;
 
+    {$IFDEF MSWINDOWS}
     class function SetPrintMode(PrintMode: TPdfPrintMode): Boolean; static;
     class function SetPrintTextWithGDI(UseGdi: Boolean): Boolean; static;
     class function GetPrintTextWithGDI: Boolean; static;
+    {$ENDIF}
 
     property FileName: string read FFileName;
     property PageCount: Integer read GetPageCount;
@@ -476,7 +481,9 @@ type
     FOnPrintStatus: TPdfDocumentPrinterStatusEvent;
 
     function IsPortraitOrientation(AWidth, AHeight: Integer): Boolean;
+    {$IFDEF MSWINDOWS}
     procedure GetPrinterBounds;
+    {$ENDIF}
   protected
     function PrinterStartDoc(const AJobTitle: string): Boolean; virtual; abstract;
     procedure PrinterEndDoc; virtual; abstract;
@@ -484,10 +491,13 @@ type
     procedure PrinterEndPage; virtual; abstract;
     function GetPrinterDC: HDC; virtual; abstract;
 
+    {$IFDEF MSWINDOWS}
     procedure InternPrintPage(APage: TPdfPage; X, Y, Width, Height: Double);
+    {$ENDIF}
   public
     constructor Create;
 
+    {$IFDEF MSWINDOWS}
     { BeginPrint must be called before printing multiple documents.
       Returns false if the printer can't print. (e.g. The user aborted the PDF Printer's FileDialog) }
     function BeginPrint(const AJobTitle: string = ''): Boolean;
@@ -498,7 +508,7 @@ type
     function Print(ADocument: TPdfDocument; AFromPageIndex, AToPageIndex: Integer): Boolean; overload;
     { Prints all pages of the PDF document. }
     function Print(ADocument: TPdfDocument): Boolean; overload;
-
+    {$ENDIF}
 
     { If PrintTextWithGDI is true the text on PDF pages are printed with GDI if the font is
       installed on the system. Otherwise the text is converted to vectors. }
@@ -573,10 +583,13 @@ begin
   ThreadPdfUnsupportedFeatureHandler := Handler;
 end;
 
+{$IFDEF MSWINDOWS}
 {$IF not declared(GetFileSizeEx)}
 function GetFileSizeEx(hFile: THandle; var lpFileSize: Int64): Boolean; stdcall;
   external kernel32 name 'GetFileSizeEx';
 {$IFEND}
+{$IFEND}
+
 
 procedure SwapInts(var X, Y: Integer);
 var
@@ -786,7 +799,11 @@ var
   I: Integer;
   Id: UINT;
 begin
+  {$IFDEF MSWINDOWS}
   Id := SetTimer(0, 0, uElapse, @FormTimerProc);
+  {$ELSE}
+  raise Exception.create('Todo');
+  {$ENDIF}
   Result := Integer(Id);
   if Id <> 0 then
   begin
@@ -817,7 +834,9 @@ var
 begin
   if nTimerID <> 0 then
   begin
+    {$IFDEF MSWINDOWS}
     KillTimer(0, nTimerID);
+    {$ENDIF}
 
     EnterCriticalSection(FFITimersCritSect);
     try
@@ -841,8 +860,16 @@ begin
 end;
 
 function FFI_GetLocalTime(pThis: PFPDF_FORMFILLINFO): FPDF_SYSTEMTIME; cdecl;
+var
+  d : TDateTime;
 begin
+  {$IFDEF MSWINDOWS}
   GetLocalTime(PSystemTime(@Result)^);
+  {$ELSE}
+  d := Now;
+  DecodeDate(d, result.wYear, result.wMonth, result.wDay);
+  decodeTime(d, result.wHour, result.wMinute, result.wSecond, result.wMilliseconds);
+  {$ENDIF}
 end;
 
 function FFI_GetPage(pThis: PFPDF_FORMFILLINFO; document: FPDF_DOCUMENT; nPageIndex: Integer): FPDF_PAGE; cdecl;
@@ -946,7 +973,9 @@ begin
   inherited Create;
   FPages := TObjectList.Create;
   FAttachments := TPdfAttachmentList.Create(Self);
+  {$IFDEF MSWINDOWS}
   FFileHandle := INVALID_HANDLE_VALUE;
+  {$ENDIF}
   FFormFieldHighlightColor := $FFE4DD;
   FFormFieldHighlightAlpha := 100;
   FPrintHidesFormFieldHighlight := True;
@@ -988,6 +1017,7 @@ begin
       FCustomLoadData := nil;
     end;
 
+    {$IFDEF MSWINDOWS}
     if FFileMapping <> 0 then
     begin
       if FBuffer <> nil then
@@ -1010,6 +1040,7 @@ begin
       CloseHandle(FFileHandle);
       FFileHandle := INVALID_HANDLE_VALUE;
     end;
+    {$ENDIF}
 
     FFileName := '';
     FFormModified := False;
@@ -1018,6 +1049,7 @@ begin
   end;
 end;
 
+{$IFDEF MSWINDOWS}
 function ReadFromActiveFile(Param: Pointer; Position: LongWord; Buffer: PByte; Size: LongWord): Boolean;
 var
   NumRead: DWORD;
@@ -1030,6 +1062,7 @@ begin
   else
     Result := Size = 0;
 end;
+{$ENDIF}
 
 procedure TPdfDocument.LoadFromFile(const AFileName: string; const APassword: AnsiString; ALoadOption: TPdfDocumentLoadOption);
 var
@@ -1039,6 +1072,7 @@ var
   LastError: DWORD;
 begin
   Close;
+  {$IFDEF MSWINDOWS}
   // We don't use FPDF_LoadDocument because it is limited to ANSI file names and dloOnDemand emulates it
 
   FFileHandle := CreateFile(PChar(AFileName), GENERIC_READ, FILE_SHARE_READ, nil, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
@@ -1110,6 +1144,9 @@ begin
     Close;
     raise;
   end;
+  {$ELSE}
+  FDocument := FPDF_LoadDocument(PAnsiChar(AFilename), PAnsiChar(APassword));
+  {$ENDIF}
   FFileName := AFileName;
 end;
 
@@ -1615,6 +1652,7 @@ begin
   Result := FPDF_VIEWERREF_GetNumCopies(FDocument);
 end;
 
+{$IFDEF MSWINDOWS}
 class function TPdfDocument.SetPrintMode(PrintMode: TPdfPrintMode): Boolean;
 begin
   InitLib;
@@ -1633,6 +1671,7 @@ class function TPdfDocument.GetPrintTextWithGDI: Boolean;
 begin
   Result := GPrintTextWithGDI;
 end;
+{$ENDIF}
 
 procedure TPdfDocument.SetFormFieldHighlightAlpha(Value: Integer);
 begin
@@ -1787,12 +1826,15 @@ var
 begin
   Open;
 
+  {$IFDEF MSWINDOWS}
   if proPrinting in Options then
   begin
     FPDF_RenderPage(DC, FPage, X, Y, Width, Height, Ord(Rotate), GetDrawFlags(Options));
     Exit;
   end;
+  {$ENDIF}
 
+  {$IFDEF MSWINDOWS}
 
   FillChar(BitmapInfo, SizeOf(BitmapInfo), 0);
   BitmapInfo.bmiHeader.biSize := SizeOf(BitmapInfo);
@@ -1827,6 +1869,9 @@ begin
       DeleteObject(Bmp);
     end;
   end;
+  {$ELSE}
+  Raise Exception.create('not done yet');
+  {$ENDIF}
 end;
 
 procedure TPdfPage.DrawToPdfBitmap(APdfBitmap: TPdfBitmap; X, Y, Width, Height: Integer;
@@ -2155,12 +2200,14 @@ const
   AltMask = $20000000;
 begin
   Result := 0;
+  {$IFDEF MSWINDOWS}
   if GetKeyState(VK_SHIFT) < 0 then
     Result := Result or FWL_EVENTFLAG_ShiftKey;
   if GetKeyState(VK_CONTROL) < 0 then
     Result := Result or FWL_EVENTFLAG_ControlKey;
   if KeyData and AltMask <> 0 then
     Result := Result or FWL_EVENTFLAG_AltKey;
+  {$ENDIF}
 end;
 
 function TPdfPage.FormEventFocus(const Shift: TShiftState; PageX, PageY: Double): Boolean;
@@ -2397,6 +2444,7 @@ var
 begin
   Open;
 
+  {$IFDEF MSWINDOWS}
   FillChar(BitmapInfo, SizeOf(BitmapInfo), 0);
   BitmapInfo.bmiHeader.biSize := SizeOf(BitmapInfo);
   BitmapInfo.bmiHeader.biWidth := bitmap.Width;
@@ -2433,6 +2481,9 @@ begin
       DeleteObject(Bmp);
     end;
   end;
+  {$ELSE}
+  raise Exception.create('To Do');
+  {$ENDIF}
 end;
 
 { _TPdfBitmapHideCtor }
@@ -2880,6 +2931,7 @@ begin
   Result := AHeight > AWidth;
 end;
 
+{$IFDEF MSWINDOWS}
 procedure TPdfDocumentPrinter.GetPrinterBounds;
 begin
   FPaperSize.cx := GetDeviceCaps(FPrinterDC, PHYSICALWIDTH);
@@ -3070,13 +3122,24 @@ begin
       TPdfDocument.SetPrintTextWithGDI(OldPrintTextWithGDI);
   end;
 end;
+{$ENDIF}
 
 initialization
+  {$IFDEF MSWINDOWS}
   InitializeCriticalSectionAndSpinCount(PDFiumInitCritSect, 4000);
   InitializeCriticalSectionAndSpinCount(FFITimersCritSect, 4000);
+  {$ELSE}
+  InitCriticalSection(PDFiumInitCritSect);
+  InitCriticalSection(FFITimersCritSect);
+  {$ENDIF}
 
 finalization
+  {$IFDEF MSWINDOWS}
   DeleteCriticalSection(FFITimersCritSect);
   DeleteCriticalSection(PDFiumInitCritSect);
+  {$ELSE}
+  DoneCriticalSection(FFITimersCritSect);
+  DoneCriticalSection(PDFiumInitCritSect);
+  {$ENDIF}
 
 end.
