@@ -8645,7 +8645,12 @@ const
   );
 
 const
+  {$IFDEF LINUX}
+  pdfium_dll = 'libpdfium.so';
+  {$ENDIF}
+  {$IFDEF MSWINDOWS}
   pdfium_dll = 'pdfium.dll';
+  {$ENDIF}
 
 var
   PdfiumModule: HMODULE;
