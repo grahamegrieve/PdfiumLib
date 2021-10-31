@@ -7,14 +7,18 @@ unit MainFrm;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants,
+  {$IFDEF MSWINDOWS} Windows, {$ELSE} LCLIntf, {$ENDIF}
+  Messages, SysUtils, Variants,
   Classes, Graphics, Controls, Forms, Dialogs,
   {$IFDEF FPC}
   PrintersDlgs,
   {$ENDIF}
-  PdfiumCore, ExtCtrls, StdCtrls, PdfiumCtrl, Spin, ComCtrls;
+  PdfiumCore, ExtCtrls, StdCtrls, PdfiumCtrl, Spin, ComCtrls, BitMapForm;
 
 type
+
+  { TfrmMain }
+
   TfrmMain = class(TForm)
     btnPrev: TButton;
     btnNext: TButton;
@@ -28,6 +32,8 @@ type
     OpenDialog1: TOpenDialog;
     ListViewAttachments: TListView;
     SaveDialog1: TSaveDialog;
+    Button1: TButton;
+    Button2: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnPrevClick(Sender: TObject);
     procedure btnNextClick(Sender: TObject);
@@ -38,6 +44,8 @@ type
     procedure edtZoomChange(Sender: TObject);
     procedure btnPrintClick(Sender: TObject);
     procedure ListViewAttachmentsDblClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
   private
     { Private-Deklarationen }
     FCtrl: TPdfControl;
@@ -55,7 +63,7 @@ implementation
 uses
   TypInfo, Printers;
 
-{$IFnDEF FPC}
+{$IFNDEF FPC}
   {$R *.dfm}
 {$ELSE}
   {$R *.lfm}
@@ -142,6 +150,35 @@ begin
   else
     FCtrl.ScaleMode := Succ(FCtrl.ScaleMode);
   Caption := GetEnumName(TypeInfo(TPdfControlScaleMode), Ord(FCtrl.ScaleMode));
+end;
+
+procedure TfrmMain.Button1Click(Sender: TObject);
+var
+  s : String;
+  obj : TPDFObject;
+begin
+  showMessage(FCtrl.Document.Pages[0].AllText);
+  s := '';
+  for obj in FCtrl.Document.Pages[0].Objects do
+    s := s + obj.Text+#13#10;
+  showMessage(s);
+end;
+
+procedure TfrmMain.Button2Click(Sender: TObject);
+var
+  obj : TPDFObject;
+  bmp : TBitmap;
+begin
+  for obj in FCtrl.Document.Pages[0].Objects do
+    if (obj.kind = potImage) then
+    begin
+      bmp := obj.AsBitmap;
+      try
+        ShowBitmap(self, bmp);
+      finally
+        bmp.Free;
+      end;
+    end;
 end;
 
 procedure TfrmMain.WebLinkClick(Sender: TObject; Url: string);

@@ -3,7 +3,7 @@ object frmMain: TfrmMain
   Top = 0
   Caption = 'PDFium Test'
   ClientHeight = 647
-  ClientWidth = 655
+  ClientWidth = 759
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -91,7 +91,7 @@ object frmMain: TfrmMain
   object ListViewAttachments: TListView
     Left = 0
     Top = 600
-    Width = 655
+    Width = 759
     Height = 47
     Align = alBottom
     Columns = <>
@@ -99,6 +99,25 @@ object frmMain: TfrmMain
     ViewStyle = vsList
     Visible = False
     OnDblClick = ListViewAttachmentsDblClick
+    ExplicitWidth = 684
+  end
+  object Button1: TButton
+    Left = 592
+    Top = 0
+    Width = 75
+    Height = 25
+    Caption = 'Text'
+    TabOrder = 9
+    OnClick = Button1Click
+  end
+  object Button2: TButton
+    Left = 673
+    Top = 0
+    Width = 75
+    Height = 25
+    Caption = 'Images'
+    TabOrder = 10
+    OnClick = Button2Click
   end
   object PrintDialog1: TPrintDialog
     MinPage = 1

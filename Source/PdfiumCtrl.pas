@@ -20,6 +20,11 @@ uses
   {$ENDIF}
   Messages, Types, SysUtils, Classes, Graphics, Controls, Forms, Dialogs, PdfiumCore;
 
+{$IFNDEF MSWINDOWS}
+const
+  WHEEL_DELTA = 120;
+  WHEEL_PAGESCROLL = MAXDWORD;
+{$ENDIF}
 const
   cPdfControlDefaultDrawOptions = [];
 
@@ -774,6 +779,9 @@ begin
 
     if DirectPageDraw or FSelectionActive or (FHighlightTextRects <> nil) then
     begin
+      {$IFNDEF MSWINDOWS}
+      raise exception.create('Not done yet');
+      {$ELSE}
       case GetClipBox(DC, ClipR) of
         NULLREGION:
           Exit; // nothing to paint
@@ -788,9 +796,8 @@ begin
 
       // copy the clipping region and adjust to the bitmap's device units
       Rgn := CreateRectRgn(0, 0, 1, 1);
-      {$IFDEF FPC}
       if false then
-      {$ELSE}
+      {$IFNDEF FPC}
       {$IF CompilerVersion >= 21.0} // 2010+
       if csPrintClient in ControlState then
       {$ELSE}
@@ -868,6 +875,7 @@ begin
       end;
       if DrawDC <> DC then
         DeleteDC(DrawDC);
+      {$ENDIF}
     end;
   end
   else
@@ -1520,7 +1528,7 @@ begin
   begin
     Clipboard.Open;
     try
-      if Clipboard.HasFormat(CF_UNICODETEXT) or Clipboard.HasFormat(CF_TEXT) then
+      if {$IFDEF MSWINDOWS}Clipboard.HasFormat(CF_UNICODETEXT) or {$ENDIF} Clipboard.HasFormat(CF_TEXT) then
         CurrentPage.FormReplaceSelection(Clipboard.AsText);
     finally
       Clipboard.Close;
@@ -2340,6 +2348,8 @@ begin
   end;
 end;
 
+
+{$IFDEF MSWINDOWS}
 procedure TPdfControl.WMTimer(var Message: TWMTimer);
 var
   XOffset, YOffset: Integer;
@@ -2374,6 +2384,7 @@ begin
     inherited;
   end;
 end;
+{$ENDIF}
 
 procedure TPdfControl.StopScrollTimer;
 begin

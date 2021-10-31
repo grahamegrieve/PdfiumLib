@@ -1,104 +1,119 @@
 object frmMain: TfrmMain
   Left = 0
+  Height = 647
   Top = 0
+  Width = 822
   Caption = 'PDFium Test'
   ClientHeight = 647
-  ClientWidth = 655
+  ClientWidth = 822
   Color = clBtnFace
-  Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
-  Font.Style = []
-  OldCreateOrder = False
   OnCreate = FormCreate
-  PixelsPerInch = 96
-  TextHeight = 13
+  LCLVersion = '2.3.0.0'
   object btnPrev: TButton
     Left = 0
+    Height = 25
     Top = 0
     Width = 75
-    Height = 25
     Caption = '<'
-    TabOrder = 0
     OnClick = btnPrevClick
+    TabOrder = 0
   end
   object btnNext: TButton
     Left = 72
+    Height = 25
     Top = 0
     Width = 75
-    Height = 25
     Caption = '>'
-    TabOrder = 1
     OnClick = btnNextClick
+    TabOrder = 1
   end
   object btnCopy: TButton
     Left = 153
+    Height = 25
     Top = 0
     Width = 75
-    Height = 25
     Caption = 'Highlight'
-    TabOrder = 2
     OnClick = btnCopyClick
+    TabOrder = 2
   end
   object btnScale: TButton
     Left = 225
+    Height = 25
     Top = 0
     Width = 75
-    Height = 25
     Caption = 'Scale'
-    TabOrder = 3
     OnClick = btnScaleClick
+    TabOrder = 3
   end
   object chkLCDOptimize: TCheckBox
     Left = 378
-    Top = 4
-    Width = 79
     Height = 17
+    Top = 4
+    Width = 78
     Caption = 'LCDOptimize'
-    TabOrder = 4
     OnClick = chkLCDOptimizeClick
+    TabOrder = 4
   end
   object chkSmoothScroll: TCheckBox
     Left = 458
-    Top = 4
-    Width = 87
     Height = 17
+    Top = 4
+    Width = 79
     Caption = 'SmoothScroll'
-    TabOrder = 5
     OnClick = chkSmoothScrollClick
+    TabOrder = 5
   end
   object edtZoom: TSpinEdit
     Left = 544
+    Height = 21
     Top = 2
     Width = 49
-    Height = 22
     MaxValue = 10000
     MinValue = 1
+    OnChange = edtZoomChange
     TabOrder = 6
     Value = 100
-    OnChange = edtZoomChange
   end
   object btnPrint: TButton
     Left = 297
+    Height = 25
     Top = 0
     Width = 75
-    Height = 25
     Caption = 'Print'
-    TabOrder = 7
     OnClick = btnPrintClick
+    TabOrder = 7
   end
   object ListViewAttachments: TListView
     Left = 0
-    Top = 600
-    Width = 655
     Height = 47
+    Top = 600
+    Width = 822
     Align = alBottom
     Columns = <>
     TabOrder = 8
-    ViewStyle = vsList
     Visible = False
     OnDblClick = ListViewAttachmentsDblClick
+  end
+  object Button1: TButton
+    Left = 592
+    Height = 25
+    Top = 0
+    Width = 75
+    Caption = 'Text'
+    OnClick = Button1Click
+    TabOrder = 9
+  end
+  object Button2: TButton
+    Left = 672
+    Height = 25
+    Top = 0
+    Width = 75
+    Caption = 'Images'
+    OnClick = Button2Click
+    TabOrder = 10
   end
   object PrintDialog1: TPrintDialog
     MinPage = 1
@@ -108,15 +123,15 @@ object frmMain: TfrmMain
     Top = 32
   end
   object OpenDialog1: TOpenDialog
-    DefaultExt = 'pdf'
-    Filter = 'PDF file (*.pdf)|*.pdf'
     Title = 'Open PDF file'
+    DefaultExt = '.pdf'
+    Filter = 'PDF file (*.pdf)|*.pdf'
     Left = 32
     Top = 32
   end
   object SaveDialog1: TSaveDialog
-    Options = [ofOverwritePrompt, ofHideReadOnly, ofPathMustExist, ofCreatePrompt, ofEnableSizing]
     Title = 'Save attachment'
+    Options = [ofOverwritePrompt, ofHideReadOnly, ofPathMustExist, ofCreatePrompt, ofEnableSizing]
     Left = 160
     Top = 32
   end

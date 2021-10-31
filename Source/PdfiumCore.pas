@@ -5,6 +5,20 @@
 {$A8,B-,E-,F-,G+,H+,I+,J-,K-,M-,N-,P+,Q-,R-,S-,T-,U-,V+,X+,Z1}
 {$STRINGCHECKS OFF}
 
+{$IFDEF MSWINDOWS}
+  { On Windows, don't use FPDF_LoadDocument because it is limited to ANSI file names and dloOnDemand emulates it }
+  {$DEFINE DELAYED_LOAD} { but this is done as define for testing}
+
+  { On windows, can use faster windows onlt rendering supported by PDFium }
+  {$DEFINE WINDOWS_RENDER} { but this is done as define for testing}
+{$ENDIF}
+
+{
+Only implemented properly on windows:
+* Timers for filling out forms
+* printing
+}
+
 unit PdfiumCore;
 
 interface
@@ -173,12 +187,32 @@ type
     property Height: Integer read FHeight;
     property BytesPerScanline: Integer read FBytesPerScanLine;
     property Bitmap: FPDF_BITMAP read FBitmap;
+
+    function toBitmap : TBitmap;
   end;
 
   PPdfFormFillHandler = ^TPdfFormFillHandler;
   TPdfFormFillHandler = record
     FormFillInfo: FPDF_FORMFILLINFO;
     Document: TPdfDocument;
+  end;
+
+  { TPDFObject }
+  TPdfObjectKind = (potUnknown, potText, potPath, potImage, potShading, potForm);
+
+  TPDFObject = class (TObject)
+  private
+    FHandle : FPDF_PAGEOBJECT;
+    FTextHandle: FPDF_TEXTPAGE;
+    function GetKind: TPdfObjectKind;
+    function GetText: String;
+  public
+    constructor Create(Handle : FPDF_PAGEOBJECT; TextHandle: FPDF_TEXTPAGE);
+
+    property kind : TPdfObjectKind read GetKind;
+    property Text : String read GetText;
+
+    function AsBitmap : TBitmap;
   end;
 
   { TPdfPage }
@@ -194,6 +228,8 @@ type
     FTextHandle: FPDF_TEXTPAGE;
     FSearchHandle: FPDF_SCHHANDLE;
     FLinkHandle: FPDF_PAGELINK;
+    FObjects : TObjectList{<TPDFObject>};
+
     constructor Create(ADocument: TPdfDocument; APage: FPDF_PAGE);
     procedure UpdateMetrics;
     procedure Open;
@@ -253,6 +289,7 @@ type
     function GetCharFontSize(CharIndex: Integer): Double;
     function GetCharBox(CharIndex: Integer): TPdfRect;
     function GetCharIndexAt(PageX, PageY, ToleranceX, ToleranceY: Double): Integer;
+    function AllText : String;
     function ReadText(CharIndex, Count: Integer): string;
     function GetTextAt(const R: TPdfRect): string; overload;
     function GetTextAt(Left, Top, Right, Bottom: Double): WideString; overload;
@@ -272,6 +309,7 @@ type
     property Height: Single read FHeight;
     property Transparency: Boolean read FTransparency;
     property Rotation: TPdfPageRotation read FRotation write SetRotation;
+    property Objects : TObjectList read FObjects;
   end;
 
   TPdfFormInvalidateEvent = procedure(Document: TPdfDocument; Page: TPdfPage; const PageRect: TPdfRect) of object;
@@ -350,12 +388,12 @@ type
     FPages: TObjectList;
     FAttachments: TPdfAttachmentList;
     FFileName: string;
-    {$IFDEF MSWINDOWS}
+    {$IFDEF DELAYED_LOAD}
     FFileHandle: THandle;
     FFileMapping: THandle;
-    {$ENDIF}
     FBuffer: PByte;
     FBytes: TBytes;
+    {$ENDIF}
     FClosing: Boolean;
     FUnsupportedFeatures: Boolean;
     FCustomLoadData: PCustomLoadDataRec;
@@ -973,7 +1011,7 @@ begin
   inherited Create;
   FPages := TObjectList.Create;
   FAttachments := TPdfAttachmentList.Create(Self);
-  {$IFDEF MSWINDOWS}
+  {$IFDEF DELAYED_LOAD}
   FFileHandle := INVALID_HANDLE_VALUE;
   {$ENDIF}
   FFormFieldHighlightColor := $FFE4DD;
@@ -1017,7 +1055,7 @@ begin
       FCustomLoadData := nil;
     end;
 
-    {$IFDEF MSWINDOWS}
+    {$IFDEF DELAYED_LOAD}
     if FFileMapping <> 0 then
     begin
       if FBuffer <> nil then
@@ -1049,7 +1087,7 @@ begin
   end;
 end;
 
-{$IFDEF MSWINDOWS}
+{$IFDEF DELAYED_LOAD}
 function ReadFromActiveFile(Param: Pointer; Position: LongWord; Buffer: PByte; Size: LongWord): Boolean;
 var
   NumRead: DWORD;
@@ -1072,9 +1110,7 @@ var
   LastError: DWORD;
 begin
   Close;
-  {$IFDEF MSWINDOWS}
-  // We don't use FPDF_LoadDocument because it is limited to ANSI file names and dloOnDemand emulates it
-
+  {$IFDEF DELAYED_LOAD}
   FFileHandle := CreateFile(PChar(AFileName), GENERIC_READ, FILE_SHARE_READ, nil, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
   if FFileHandle = INVALID_HANDLE_VALUE then
     RaiseLastOSError;
@@ -1146,6 +1182,7 @@ begin
   end;
   {$ELSE}
   FDocument := FPDF_LoadDocument(PAnsiChar(AFilename), PAnsiChar(APassword));
+  DocumentLoaded;
   {$ENDIF}
   FFileName := AFileName;
 end;
@@ -1153,11 +1190,15 @@ end;
 procedure TPdfDocument.LoadFromStream(AStream: TStream; const APassword: AnsiString);
 var
   Size: NativeInt;
+  {$IFNDEF DELAYED_LOAD}
+  buffer: PByte;
+  {$ENDIF}
 begin
   Close;
   Size := AStream.Size;
   if Size > 0 then
   begin
+    {$IFDEF DELAYED_LOAD}
     GetMem(FBuffer, Size);
     try
       AStream.ReadBuffer(FBuffer^, Size);
@@ -1166,6 +1207,20 @@ begin
       Close;
       raise;
     end;
+    {$ELSE}
+    try
+      GetMem(buffer, Size);
+      try
+        AStream.ReadBuffer(buffer^, Size);
+        FDocument := FPDF_LoadMemDocument(buffer, size, PAnsiChar(APassword));
+      finally
+        FreeMem(buffer);
+      end;
+    except
+      Close;
+      raise;
+    end;
+    {$ENDIF}
   end;
 end;
 
@@ -1180,8 +1235,7 @@ begin
   LoadFromBytes(ABytes, 0, Length(ABytes), APassword);
 end;
 
-procedure TPdfDocument.LoadFromBytes(const ABytes: TBytes; AIndex, ACount: NativeInt;
-  const APassword: AnsiString);
+procedure TPdfDocument.LoadFromBytes(const ABytes: TBytes; AIndex, ACount: NativeInt; const APassword: AnsiString);
 var
   Len: NativeInt;
 begin
@@ -1193,8 +1247,12 @@ begin
   if AIndex + ACount > Len then
     raise EPdfArgumentOutOfRange.CreateResFmt(@RsArgumentsOutOfRange, ['Count', ACount]);
 
+  {$IFDEF DELAYED_LOAD}
   FBytes := ABytes; // keep alive after return
   InternLoadFromMem(@ABytes[AIndex], ACount, APassword);
+  {$ELSE}
+  FDocument := FPDF_LoadMemDocument(@ABytes[AIndex], ACount, PAnsiChar(APassword));
+  {$ENDIF}
 end;
 
 function ReadFromActiveStream(Param: Pointer; Position: LongWord; Buffer: PByte; Size: LongWord): Boolean;
@@ -1715,17 +1773,24 @@ end;
 { TPdfPage }
 
 constructor TPdfPage.Create(ADocument: TPdfDocument; APage: FPDF_PAGE);
+var
+  i : integer;
 begin
   inherited Create;
   FDocument := ADocument;
   FPage := APage;
-
+  FObjects := TObjectList{<TPDFObject>}.create;
+  FObjects.OwnsObjects := true;
+  if BeginText then
+    for i := 0 to FPDFPage_CountObjects(APage) - 1 do
+      FObjects.Add(TPDFObject.Create(FPDFPage_GetObject(APage, i), FTextHandle));
   AfterOpen;
 end;
 
 destructor TPdfPage.Destroy;
 begin
   Close;
+  FObjects.Free;
   FDocument.ExtractPage(Self);
   inherited Destroy;
 end;
@@ -1821,8 +1886,6 @@ var
   BmpBits: Pointer;
   PdfBmp: TPdfBitmap;
   BmpDC: HDC;
-  vbmp : TBitmap;
-  vbmp2 : TBitmap;
 begin
   Open;
 
@@ -1833,8 +1896,6 @@ begin
     Exit;
   end;
   {$ENDIF}
-
-  {$IFDEF MSWINDOWS}
 
   FillChar(BitmapInfo, SizeOf(BitmapInfo), 0);
   BitmapInfo.bmiHeader.biSize := SizeOf(BitmapInfo);
@@ -1869,9 +1930,6 @@ begin
       DeleteObject(Bmp);
     end;
   end;
-  {$ELSE}
-  Raise Exception.create('not done yet');
-  {$ENDIF}
 end;
 
 procedure TPdfPage.DrawToPdfBitmap(APdfBitmap: TPdfBitmap; X, Y, Width, Height: Integer;
@@ -1949,6 +2007,23 @@ begin
   Open;
   FPDFPage_SetRotation(FPage, Ord(Value));
   FRotation := TPdfPageRotation(FPDFPage_GetRotation(FPage));
+end;
+
+function TPdfPage.AllText: String;
+var
+  c : integer;
+  s : String;
+begin
+  result := '';
+  if BeginText then
+  begin
+    c := 0;
+    repeat
+      s := ReadText(c, 100);
+      inc(c, 100);
+      result := result + s;
+    until s = '';
+  end;
 end;
 
 procedure TPdfPage.ApplyChanges;
@@ -2084,15 +2159,20 @@ end;
 function TPdfPage.ReadText(CharIndex, Count: Integer): string;
 var
   Len: Integer;
+  p : TBytes;
 begin
   if (Count > 0) and BeginText then
   begin
-    SetLength(Result, Count); // we let GetText overwrite our #0 terminator with its #0
-    Len := FPDFText_GetText(FTextHandle, CharIndex, Count, PWideChar(Result)) - 1; // returned length includes the #0
+    SetLength(p, (Count+1)*2); // we let GetText overwrite our #0 terminator with its #0
+    Len := FPDFText_GetText(FTextHandle, CharIndex, Count, p)-1; // returned length includes the #0
     if Len <= 0 then
       Result := ''
-    else if Len < Count then
-      SetLength(Result, Len);
+    else if Len <= Count then
+    begin
+      result := TEncoding.Unicode.GetString(p);
+      if result[length(result)] = #0 then
+        delete(result, length(result), 1);
+    end;
   end
   else
     Result := '';
@@ -2435,16 +2515,15 @@ end;
 
 procedure TPdfPage.Draw(bitmap : TBitmap; Rotate: TPdfPageRotation; const Options: TPdfPageRenderOptions);
 var
+  PdfBmp: TPdfBitmap;
   BitmapInfo: TBitmapInfo;
   Bmp, OldBmp: HBITMAP;
   BmpBits: Pointer;
-  PdfBmp: TPdfBitmap;
   BmpDC: HDC;
   vbmp : TBitmap;
 begin
   Open;
 
-  {$IFDEF MSWINDOWS}
   FillChar(BitmapInfo, SizeOf(BitmapInfo), 0);
   BitmapInfo.bmiHeader.biSize := SizeOf(BitmapInfo);
   BitmapInfo.bmiHeader.biWidth := bitmap.Width;
@@ -2481,9 +2560,6 @@ begin
       DeleteObject(Bmp);
     end;
   end;
-  {$ELSE}
-  raise Exception.create('To Do');
-  {$ENDIF}
 end;
 
 { _TPdfBitmapHideCtor }
@@ -2538,6 +2614,128 @@ begin
   else
     Result := nil;
 end;
+
+function TPdfBitmap.toBitmap: TBitmap;
+var
+  fmt : Integer;
+  p, pt : pByte;
+  w, h, stride: Integer;
+  r,g,b : byte;
+begin
+  fmt := FPDFBitmap_GetFormat(FBitmap);
+  if (fmt <> FPDFBitmap_BGR) then
+    raise Exception.Create('Format '+inttostr(fmt)+' not supported');
+  // 3 bytes per pixel, byte order: blue, green, red.
+  result := TBitmap.Create;
+  try
+    result.Width := FPDFBitmap_GetWidth(FBitmap);
+    result.Height := FPDFBitmap_GetWidth(FBitmap);
+    stride := FPDFBitmap_GetStride(FBitmap);
+    p := FPDFBitmap_GetBuffer(FBitmap);
+    for h := 0 to result.Height - 1 do
+    begin
+      pt := p;
+      for w := 0 to result.Width - 1 do
+      begin
+        b := pt^;
+        inc(pt);
+        g := pt^;
+        inc(pt);
+        r := pt^;
+        inc(pt);
+        result.Canvas.Pixels[w,h] := RGB(r,g,b);
+      end;
+      inc(p, stride);
+    end;
+  except
+    result.Free;
+    raise;
+  end;
+end;
+// Function: FPDFBitmap_Create
+//          Create a device independent bitmap (FXDIB).
+// Parameters:
+//          width       -   The number of pixels in width for the bitmap.
+//                          Must be greater than 0.
+//          height      -   The number of pixels in height for the bitmap.
+//                          Must be greater than 0.
+//          alpha       -   A flag indicating whether the alpha channel is used.
+//                          Non-zero for using alpha, zero for not using.
+// Return value:
+//          The created bitmap handle, or NULL if a parameter error or out of
+//          memory.
+// Comments:
+//          The bitmap always uses 4 bytes per pixel. The first byte is always
+//          double word aligned.
+//
+//          The byte order is BGRx (the last byte unused if no alpha channel) or
+//          BGRA.
+//
+//          The pixels in a horizontal line are stored side by side, with the
+//          left most pixel stored first (with lower memory address).
+//          Each line uses width * 4 bytes.
+//
+//          Lines are stored one after another, with the top most line stored
+//          first. There is no gap between adjacent lines.
+//
+//          This function allocates enough memory for holding all pixels in the
+//          bitmap, but it doesn't initialize the buffer. Applications can use
+//          FPDFBitmap_FillRect() to fill the bitmap using any color. If the OS
+//          allows it, this function can allocate up to 4 GB of memory.
+//  FPDFBitmap_Create: function(width, height: Integer; alpha: Integer): FPDF_BITMAP; {$IFDEF DLLEXPORT}stdcall{$ELSE}cdecl{$ENDIF};
+//!
+//const
+//  // More DIB formats
+//  FPDFBitmap_Unknown = 0; // Unknown or unsupported format.
+//  FPDFBitmap_Gray    = 1; // Gray scale bitmap, one byte per pixel.
+//  FPDFBitmap_BGR     = 2; // 3 bytes per pixel, byte order: blue, green, red.
+//  FPDFBitmap_BGRx    = 3; // 4 bytes per pixel, byte order: blue, green, red, unused.
+//  FPDFBitmap_BGRA    = 4; // 4 bytes per pixel, byte order: blue, green, red, alpha.
+//
+//// Function: FPDFBitmap_CreateEx
+////          Create a device independent bitmap (FXDIB)
+//// Parameters:
+////          width       -   The number of pixels in width for the bitmap.
+////                          Must be greater than 0.
+////          height      -   The number of pixels in height for the bitmap.
+////                          Must be greater than 0.
+////          format      -   A number indicating for bitmap format, as defined
+////                          above.
+////          first_scan  -   A pointer to the first byte of the first line if
+////                          using an external buffer. If this parameter is NULL,
+////                          then the a new buffer will be created.
+////          stride      -   Number of bytes for each scan line, for external
+////                          buffer only.
+//// Return value:
+////          The bitmap handle, or NULL if parameter error or out of memory.
+//// Comments:
+////          Similar to FPDFBitmap_Create function, but allows for more formats
+////          and an external buffer is supported. The bitmap created by this
+////          function can be used in any place that a FPDF_BITMAP handle is
+////          required.
+////
+////          If an external buffer is used, then the application should destroy
+////          the buffer by itself. FPDFBitmap_Destroy function will not destroy
+////          the buffer.
+//var
+//  FPDFBitmap_CreateEx: function(width, height: Integer; format: Integer; first_scan: Pointer;
+//    stride: Integer): FPDF_BITMAP; {$IFDEF DLLEXPORT}stdcall{$ELSE}cdecl{$ENDIF};
+//
+//end;
+//
+//or
+//// Get the raw image data of |image_object|. The raw data is the image data as
+//// stored in the PDF without applying any filters. |buffer| is only modified if
+//// |buflen| is longer than the length of the raw image data.
+////
+////   image_object - handle to an image object.
+////   buffer       - buffer for holding the raw image data.
+////   buflen       - length of the buffer in bytes.
+////
+//// Returns the length of the raw image data.
+//var
+//  FPDFImageObj_GetImageDataRaw: function(image_object: FPDF_PAGEOBJECT; buffer: Pointer;
+//    buflen: LongWord): LongWord; {$IFDEF DLLEXPORT}stdcall{$ELSE}cdecl{$ENDIF};
 
 procedure TPdfBitmap.FillRect(ALeft, ATop, AWidth, AHeight: Integer; AColor: FPDF_DWORD);
 begin
@@ -3123,6 +3321,50 @@ begin
   end;
 end;
 {$ENDIF}
+
+{ TPDFObject }
+
+function TPDFObject.AsBitmap: TBitmap;
+var
+  pdfBmp : TPdfBitmap;
+begin
+  pdfBmp := TPdfBitmap.Create(FPDFImageObj_GetBitmap(FHandle), true);
+  try
+    result := pdfBmp.toBitmap;
+  finally
+    pdfBmp.free;
+  end;
+end;
+
+constructor TPDFObject.Create(Handle: FPDF_PAGEOBJECT; TextHandle: FPDF_TEXTPAGE);
+begin
+  inherited Create;
+  FHandle := Handle;
+  FTextHandle := TextHandle;
+end;
+
+function TPDFObject.GetKind: TPdfObjectKind;
+begin
+  result := TPdfObjectKind(FPDFPageObj_GetType(FHandle));
+end;
+
+function TPDFObject.GetText: String;
+var
+  i, l : integer;
+  p : TBytes;
+begin
+  if kind = potText then
+  begin
+    l := FPDFTextObj_GetText(FHandle, FTextHandle, nil, 0);
+    SetLength(p, l);
+    l := FPDFTextObj_GetText(FHandle, FTextHandle, @p[0], l);
+    result := TEncoding.Unicode.GetString(p);
+    if result[length(result)] = #0 then
+      delete(result, length(result), 1);
+  end
+  else
+    result := '';
+end;
 
 initialization
   {$IFDEF MSWINDOWS}

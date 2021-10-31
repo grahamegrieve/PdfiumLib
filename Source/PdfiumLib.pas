@@ -2523,8 +2523,8 @@ var
 // If |length| is less than the returned length, or |buffer| is NULL, |buffer|
 // will not be modified.
 var
-  FPDFTextObj_GetText: function(text_object: FPDF_PAGEOBJECT; text_page: FPDF_TEXTPAGE; buffer: FPDF_WCHAR;
-    length: LongWord): LongWord; {$IFDEF DLLEXPORT}stdcall{$ELSE}cdecl{$ENDIF};
+  FPDFTextObj_GetText: function(text_object: FPDF_PAGEOBJECT; text_page: FPDF_TEXTPAGE; buffer: pointer;
+    length: Integer): Integer; {$IFDEF DLLEXPORT}stdcall{$ELSE}cdecl{$ENDIF};
 
 // Experimental API.
 // Get the font of a text object.
@@ -3143,7 +3143,7 @@ var
 //          This function ignores characters without unicode information.
 //
 var
-  FPDFText_GetText: function(text_page: FPDF_TEXTPAGE; start_index, count: Integer; result: PWideChar): Integer; {$IFDEF DLLEXPORT}stdcall{$ELSE}cdecl{$ENDIF};
+  FPDFText_GetText: function(text_page: FPDF_TEXTPAGE; start_index, count: Integer; result: pointer): Integer; {$IFDEF DLLEXPORT}stdcall{$ELSE}cdecl{$ENDIF};
 
 // Function: FPDFText_CountRects
 //          Count number of rectangular areas occupied by a segment of texts.
@@ -8179,10 +8179,10 @@ const
     (P: @@FPDF_SetSandBoxPolicy;                      N: 'FPDF_SetSandBoxPolicy'),
     {$IFDEF MSWINDOWS}
       {$IFDEF PDFIUM_PRINT_TEXT_WITH_GDI}
-   ! (P: @@FPDF_SetTypefaceAccessibleFunc;             N: 'FPDF_SetTypefaceAccessibleFunc'),
+    (P: @@FPDF_SetTypefaceAccessibleFunc;             N: 'FPDF_SetTypefaceAccessibleFunc'),
     (P: @@FPDF_SetPrintTextWithGDI;                   N: 'FPDF_SetPrintTextWithGDI'),
       {$ENDIF PDFIUM_PRINT_TEXT_WITH_GDI}
-  !  (P: @@FPDF_SetPrintMode;                          N: 'FPDF_SetPrintMode'),
+    (P: @@FPDF_SetPrintMode;                          N: 'FPDF_SetPrintMode'),
     {$ENDIF MSWINDOWS}
     (P: @@FPDF_LoadDocument;                          N: 'FPDF_LoadDocument'),
     (P: @@FPDF_LoadMemDocument;                       N: 'FPDF_LoadMemDocument'),
@@ -8204,7 +8204,7 @@ const
     (P: @@FPDF_GetPageSizeByIndexF;                   N: 'FPDF_GetPageSizeByIndexF'),
     (P: @@FPDF_GetPageSizeByIndex;                    N: 'FPDF_GetPageSizeByIndex'),
     {$IFDEF MSWINDOWS}
-  !  (P: @@FPDF_RenderPage;                            N: 'FPDF_RenderPage'),
+    (P: @@FPDF_RenderPage;                            N: 'FPDF_RenderPage'),
     {$ENDIF MSWINDOWS}
     (P: @@FPDF_RenderPageBitmap;                      N: 'FPDF_RenderPageBitmap'),
     (P: @@FPDF_RenderPageBitmapWithMatrix;            N: 'FPDF_RenderPageBitmapWithMatrix'),

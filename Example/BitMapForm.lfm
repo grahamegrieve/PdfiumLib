@@ -1,0 +1,42 @@
+object BitmapDialog: TBitmapDialog
+  Left = 343
+  Height = 423
+  Top = 75
+  Width = 555
+  Caption = 'Bitmap'
+  ClientHeight = 423
+  ClientWidth = 555
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  LCLVersion = '2.3.0.0'
+  object Image1: TImage
+    Left = 0
+    Height = 382
+    Top = 0
+    Width = 555
+    Align = alClient
+    Proportional = True
+  end
+  object Panel1: TPanel
+    Left = 0
+    Height = 41
+    Top = 382
+    Width = 555
+    Align = alBottom
+    ClientHeight = 41
+    ClientWidth = 555
+    TabOrder = 0
+    object Button1: TButton
+      Left = 472
+      Height = 25
+      Top = 8
+      Width = 75
+      Caption = 'OK'
+      Default = True
+      ModalResult = 1
+      TabOrder = 0
+    end
+  end
+end
