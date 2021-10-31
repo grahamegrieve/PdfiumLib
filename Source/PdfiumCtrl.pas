@@ -779,15 +779,14 @@ begin
 
     if DirectPageDraw or FSelectionActive or (FHighlightTextRects <> nil) then
     begin
-      {$IFNDEF MSWINDOWS}
-      raise exception.create('Not done yet');
-      {$ELSE}
+      {$IFDEF MSWINDOWS}
       case GetClipBox(DC, ClipR) of
         NULLREGION:
           Exit; // nothing to paint
         ERROR:
           Windows.GetClientRect(Handle, ClipR);
       end;
+
       // Double buffer, minimal bitmap size
       DrawDC := CreateCompatibleDC(DC);
       DrawBmp := CreateCompatibleBitmap(DC, ClipR.Right - ClipR.Left, ClipR.Bottom - ClipR.Top);
@@ -825,6 +824,9 @@ begin
         end;
       end;
       DeleteObject(Rgn);
+      {$ELSE}
+      raise Exception.create('Only supported on windows');
+      {$ENDIF}
     end
     else
     begin
@@ -875,7 +877,6 @@ begin
       end;
       if DrawDC <> DC then
         DeleteDC(DrawDC);
-      {$ENDIF}
     end;
   end
   else
