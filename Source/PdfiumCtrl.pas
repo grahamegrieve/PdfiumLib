@@ -698,7 +698,9 @@ var
   OldPageBmp: HBITMAP;
   bmi: TBitmapInfo;
   {$IFDEF MSWINDOWS}
-  BmpData: Windows.TBitmap;
+  BmpData: Windows.Bitmap;
+  {$ELSE}
+  BmpData: LCLType.Bitmap;
   {$ENDIF}
   Bits: Pointer;
 begin
@@ -714,7 +716,6 @@ begin
   end
   else
   begin
-    {$IFDEF MSWINDOWS}
     if (FPageBitmap = 0) or
        (GetObject(FPageBitmap, SizeOf(BmpData), @BmpData) <> SizeOf(BmpData)) or
        (FDrawWidth <> BmpData.bmWidth) or
@@ -737,7 +738,6 @@ begin
         FPageBitmap := CreateDIBSection(DC, bmi, DIB_RGB_COLORS, Bits, 0, 0);
       end;
     end;
-    {$ENDIF}
 
     PageDC := CreateCompatibleDC(DC);
     OldPageBmp := SelectObject(PageDC, FPageBitmap);
