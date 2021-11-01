@@ -2618,34 +2618,55 @@ end;
 function TPdfBitmap.toBitmap: TBitmap;
 var
   fmt : Integer;
-  p, pt : pByte;
-  w, h, stride: Integer;
+  p, pt, pl : pByte;
+  w, wt, h, ht, stride: Integer;
   r,g,b : byte;
 begin
   fmt := FPDFBitmap_GetFormat(FBitmap);
-  if (fmt <> FPDFBitmap_BGR) then
-    raise Exception.Create('Format '+inttostr(fmt)+' not supported');
-  // 3 bytes per pixel, byte order: blue, green, red.
   result := TBitmap.Create;
   try
-    result.Width := FPDFBitmap_GetWidth(FBitmap);
-    result.Height := FPDFBitmap_GetWidth(FBitmap);
+    wt := FPDFBitmap_GetWidth(FBitmap);
+    result.Width := wt;
+    ht := FPDFBitmap_GetHeight(FBitmap);
+    result.Height := ht;
     stride := FPDFBitmap_GetStride(FBitmap);
     p := FPDFBitmap_GetBuffer(FBitmap);
-    for h := 0 to result.Height - 1 do
-    begin
-      pt := p;
-      for w := 0 to result.Width - 1 do
+    case fmt of
+      FPDFBitmap_BGR :
       begin
-        b := pt^;
-        inc(pt);
-        g := pt^;
-        inc(pt);
-        r := pt^;
-        inc(pt);
-        result.Canvas.Pixels[w,h] := RGB(r,g,b);
+        // 3 bytes per pixel, byte order: blue, green, red.
+        for h := 0 to result.Height - 1 do
+        begin
+          pt := p;
+          pl := result.ScanLine[h];
+          // same format
+          move(pt^, pl^, result.Width * 3);
+          inc(p, stride);
+        end;
       end;
-      inc(p, stride);
+      FPDFBitmap_Gray :
+      begin
+        // 1 bytes per pixel, byte order: grey.
+        for h := 0 to result.Height - 1 do
+        begin
+          pt := p;
+          pl := result.ScanLine[h];
+          for w := 0 to result.Width - 1 do
+          begin
+            b := pt^;
+            inc(pt);
+            pl^ := b;
+            inc(pl);
+            pl^ := b;
+            inc(pl);
+            pl^ := b;
+            inc(pl);
+          end;
+          inc(p, stride);
+        end;
+      end;
+      else
+        raise Exception.Create('Format '+inttostr(fmt)+' not supported');
     end;
   except
     result.Free;
