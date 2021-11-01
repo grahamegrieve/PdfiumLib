@@ -20,7 +20,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="1"/>
         <TopLine Value="167"/>
-        <CursorPos X="29" Y="180"/>
+        <CursorPos X="114" Y="183"/>
         <UsageCount Value="25"/>
         <Loaded Value="True"/>
       </Unit>
@@ -29,8 +29,8 @@
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="7"/>
-        <TopLine Value="2626"/>
-        <CursorPos X="47" Y="2651"/>
+        <TopLine Value="184"/>
+        <CursorPos X="52" Y="186"/>
         <UsageCount Value="25"/>
         <Loaded Value="True"/>
       </Unit>
@@ -130,10 +130,6 @@
       </Unit>
     </Units>
     <JumpHistory HistoryIndex="29">
-      <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="643" Column="20" TopLine="594"/>
-      </Position>
       <Position>
         <Filename Value="..\Source\PdfiumCtrl.pas"/>
         <Caret Line="868" Column="39" TopLine="853"/>
@@ -246,6 +242,10 @@
       <Position>
         <Filename Value="..\Source\PdfiumCore.pas"/>
         <Caret Line="2664" TopLine="2632"/>
+      </Position>
+      <Position>
+        <Filename Value="MainFrm.pas"/>
+        <Caret Line="183" Column="114" TopLine="167"/>
       </Position>
     </JumpHistory>
     <RunParams>

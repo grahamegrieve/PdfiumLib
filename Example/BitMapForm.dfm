@@ -20,6 +20,7 @@ object BitmapDialog: TBitmapDialog
     Height = 382
     Align = alClient
     Proportional = True
+    Stretch = True
     ExplicitTop = 2
   end
   object Panel1: TPanel
@@ -29,9 +30,6 @@ object BitmapDialog: TBitmapDialog
     Height = 41
     Align = alBottom
     TabOrder = 0
-    ExplicitLeft = 168
-    ExplicitTop = 256
-    ExplicitWidth = 185
     object Button1: TButton
       Left = 472
       Top = 8

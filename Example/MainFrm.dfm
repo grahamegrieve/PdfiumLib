@@ -99,7 +99,6 @@ object frmMain: TfrmMain
     ViewStyle = vsList
     Visible = False
     OnDblClick = ListViewAttachmentsDblClick
-    ExplicitWidth = 684
   end
   object Button1: TButton
     Left = 592

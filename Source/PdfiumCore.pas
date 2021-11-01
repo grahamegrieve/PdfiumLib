@@ -2615,16 +2615,22 @@ begin
     Result := nil;
 end;
 
+type
+  TRGBTripleArray = ARRAY[Word] of TRGBTriple;
+  pRGBTripleArray = ^TRGBTripleArray; // Use a PByteArray for pf8bit color.
+
 function TPdfBitmap.toBitmap: TBitmap;
 var
   fmt : Integer;
-  p, pt, pl : pByte;
+  p : pByte;
+  pt, pl : pByte;
   w, wt, h, ht, stride: Integer;
   r,g,b : byte;
 begin
   fmt := FPDFBitmap_GetFormat(FBitmap);
   result := TBitmap.Create;
   try
+    result.PixelFormat := pf24bit;
     wt := FPDFBitmap_GetWidth(FBitmap);
     result.Width := wt;
     ht := FPDFBitmap_GetHeight(FBitmap);
@@ -2635,12 +2641,12 @@ begin
       FPDFBitmap_BGR :
       begin
         // 3 bytes per pixel, byte order: blue, green, red.
-        for h := 0 to result.Height - 1 do
+        for h := 0 to ht - 1 do
         begin
           pt := p;
           pl := result.ScanLine[h];
           // same format
-          move(pt^, pl^, result.Width * 3);
+          move(pt^, pl^, wt * 3);
           inc(p, stride);
         end;
       end;

@@ -1,5 +1,5 @@
 # PdfiumLib
-Example of a PDF VCL Control using PDFium
+Example of a PDF Control using PDFium - works with both Delphi and Lazarus on Windows, Linux, and OSX.
 
 ## Requirements
 pdfium.dll (x86/x64) from the [pdfium-binaries](https://github.com/bblanchon/pdfium-binaries)
