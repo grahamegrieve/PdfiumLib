@@ -9,7 +9,7 @@
         <Filename Value="PdfiumLibExample.dpr"/>
         <IsPartOfProject Value="True"/>
         <CursorPos X="44" Y="25"/>
-        <UsageCount Value="38"/>
+        <UsageCount Value="43"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -21,7 +21,7 @@
         <EditorIndex Value="1"/>
         <TopLine Value="167"/>
         <CursorPos X="29" Y="180"/>
-        <UsageCount Value="38"/>
+        <UsageCount Value="43"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -29,18 +29,18 @@
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="10"/>
-        <TopLine Value="2664"/>
-        <CursorPos X="30" Y="2686"/>
-        <UsageCount Value="38"/>
+        <TopLine Value="2647"/>
+        <CursorPos X="40" Y="2648"/>
+        <UsageCount Value="43"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\Source\PdfiumCtrl.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="5"/>
-        <TopLine Value="755"/>
-        <CursorPos Y="769"/>
-        <UsageCount Value="38"/>
+        <TopLine Value="834"/>
+        <CursorPos X="41" Y="848"/>
+        <UsageCount Value="43"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -49,7 +49,7 @@
         <EditorIndex Value="3"/>
         <TopLine Value="1033"/>
         <CursorPos X="18" Y="1052"/>
-        <UsageCount Value="38"/>
+        <UsageCount Value="43"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -58,7 +58,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="650"/>
         <CursorPos X="3" Y="659"/>
-        <UsageCount Value="9"/>
+        <UsageCount Value="8"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
@@ -66,7 +66,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="40"/>
         <CursorPos X="58" Y="55"/>
-        <UsageCount Value="9"/>
+        <UsageCount Value="8"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
@@ -74,27 +74,27 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="655"/>
         <CursorPos X="24" Y="661"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="10"/>
       </Unit>
       <Unit>
         <Filename Value="C:\tools\lazarus.latest\lazarus\lcl\include\winapih.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="87"/>
         <CursorPos X="10" Y="134"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="10"/>
       </Unit>
       <Unit>
         <Filename Value="C:\tools\lazarus.latest\lazarus\lcl\include\scrollingwincontrol.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="313"/>
         <CursorPos X="51" Y="336"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit>
       <Unit>
         <Filename Value="C:\tools\lazarus.latest\lazarus\lcl\include\customdesigncontrol.inc"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="91" Y="10"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit>
       <Unit>
         <Filename Value="BitMapForm.pas"/>
@@ -102,9 +102,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="17"/>
-        <CursorPos X="13" Y="41"/>
-        <UsageCount Value="17"/>
+        <TopLine Value="8"/>
+        <CursorPos X="44" Y="31"/>
+        <UsageCount Value="19"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -113,7 +113,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="235"/>
         <CursorPos X="22" Y="262"/>
-        <UsageCount Value="9"/>
+        <UsageCount Value="8"/>
       </Unit>
       <Unit>
         <Filename Value="C:\tools\lazarus.latest\lazarus\lcl\lcltype.pp"/>
@@ -121,7 +121,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="82"/>
         <CursorPos X="3" Y="108"/>
-        <UsageCount Value="9"/>
+        <UsageCount Value="8"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\tools\lazarus\components\lazutils\laztracer.pas"/>
@@ -129,7 +129,7 @@
         <EditorIndex Value="4"/>
         <TopLine Value="34"/>
         <CursorPos Y="50"/>
-        <UsageCount Value="17"/>
+        <UsageCount Value="19"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -137,7 +137,7 @@
         <EditorIndex Value="6"/>
         <TopLine Value="910"/>
         <CursorPos Y="926"/>
-        <UsageCount Value="17"/>
+        <UsageCount Value="19"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -145,7 +145,7 @@
         <EditorIndex Value="7"/>
         <TopLine Value="8005"/>
         <CursorPos Y="8020"/>
-        <UsageCount Value="17"/>
+        <UsageCount Value="19"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -153,7 +153,7 @@
         <EditorIndex Value="8"/>
         <TopLine Value="4270"/>
         <CursorPos X="11" Y="4284"/>
-        <UsageCount Value="17"/>
+        <UsageCount Value="19"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -162,19 +162,11 @@
         <EditorIndex Value="9"/>
         <TopLine Value="256"/>
         <CursorPos X="5" Y="272"/>
-        <UsageCount Value="17"/>
+        <UsageCount Value="19"/>
         <Loaded Value="True"/>
       </Unit>
     </Units>
     <JumpHistory HistoryIndex="29">
-      <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="770" TopLine="750"/>
-      </Position>
-      <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="767" Column="35" TopLine="750"/>
-      </Position>
       <Position>
         <Filename Value="..\Source\PdfiumCore.pas"/>
         <Caret Line="2525" TopLine="2509"/>
@@ -286,6 +278,14 @@
       <Position>
         <Filename Value="..\Source\PdfiumCore.pas"/>
         <Caret Line="2693" Column="41" TopLine="2674"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\PdfiumCore.pas"/>
+        <Caret Line="2686" Column="30" TopLine="2664"/>
+      </Position>
+      <Position>
+        <Filename Value="BitMapForm.pas"/>
+        <Caret Line="31" Column="44" TopLine="17"/>
       </Position>
     </JumpHistory>
     <RunParams>

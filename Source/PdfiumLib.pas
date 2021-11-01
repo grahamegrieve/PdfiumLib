@@ -8648,6 +8648,9 @@ const
   {$IFDEF LINUX}
   pdfium_dll = 'libpdfium.so';
   {$ENDIF}
+  {$IFDEF DARWIN}
+  pdfium_dll = 'libpdfium.dylib';
+  {$ENDIF}
   {$IFDEF MSWINDOWS}
   pdfium_dll = 'pdfium.dll';
   {$ENDIF}

@@ -71,11 +71,8 @@ uses
 
 procedure TfrmMain.FormCreate(Sender: TObject);
 begin
-  {$IFDEF CPUX64}
-  PDFiumDllDir := ExtractFilePath(ParamStr(0)) + 'x64';
-  {$ELSE}
-  PDFiumDllDir := ExtractFilePath(ParamStr(0)) + 'x86';
-  {$ENDIF CPUX64}
+  PDFiumDllDir := ExtractFilePath(ParamStr(0));
+
 
   FCtrl := TPdfControl.Create(Self);
   FCtrl.Align := alClient;
@@ -168,10 +165,15 @@ procedure TfrmMain.Button2Click(Sender: TObject);
 var
   obj : TPDFObject;
   bmp : TBitmap;
+  i : integer;
 begin
+  ShowMessage('Object count = '+inttostr(FCtrl.Document.Pages[0].Objects.count));
+  i := 0;
   for obj in FCtrl.Document.Pages[0].Objects do
+  begin
     if (obj.kind = potImage) then
     begin
+      ShowMessage('Object index = '+inttostr(i));
       bmp := obj.AsBitmap;
       try
         ShowBitmap(self, bmp);
@@ -179,6 +181,8 @@ begin
         bmp.Free;
       end;
     end;
+    inc(i);
+  end;
 end;
 
 procedure TfrmMain.WebLinkClick(Sender: TObject; Url: string);

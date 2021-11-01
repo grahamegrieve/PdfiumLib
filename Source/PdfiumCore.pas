@@ -2635,6 +2635,10 @@ begin
     Result := nil;
 end;
 
+type
+  TRGBTripleArray = ARRAY[Word] of TRGBTriple;
+  pRGBTripleArray = ^TRGBTripleArray; // Use a PByteArray for pf8bit color.
+
 function TPdfBitmap.toBitmap: TBitmap;
 begin
   result := TBitmap.Create;
@@ -2649,7 +2653,8 @@ end;
 procedure TPdfBitmap.toBitmap(bmp: TBitmap);
 var
   fmt : Integer;
-  p, pt, pl : pByte;
+  p : pByte;
+  pt, pl : pByte;
   w, wt, h, ht, stride: Integer;
   r,g,b : byte;
 begin
@@ -2713,91 +2718,6 @@ begin
       raise Exception.Create('Format '+inttostr(fmt)+' not supported');
   end;
 end;
-
-// Function: FPDFBitmap_Create
-//          Create a device independent bitmap (FXDIB).
-// Parameters:
-//          width       -   The number of pixels in width for the bitmap.
-//                          Must be greater than 0.
-//          height      -   The number of pixels in height for the bitmap.
-//                          Must be greater than 0.
-//          alpha       -   A flag indicating whether the alpha channel is used.
-//                          Non-zero for using alpha, zero for not using.
-// Return value:
-//          The created bitmap handle, or NULL if a parameter error or out of
-//          memory.
-// Comments:
-//          The bitmap always uses 4 bytes per pixel. The first byte is always
-//          double word aligned.
-//
-//          The byte order is BGRx (the last byte unused if no alpha channel) or
-//          BGRA.
-//
-//          The pixels in a horizontal line are stored side by side, with the
-//          left most pixel stored first (with lower memory address).
-//          Each line uses width * 4 bytes.
-//
-//          Lines are stored one after another, with the top most line stored
-//          first. There is no gap between adjacent lines.
-//
-//          This function allocates enough memory for holding all pixels in the
-//          bitmap, but it doesn't initialize the buffer. Applications can use
-//          FPDFBitmap_FillRect() to fill the bitmap using any color. If the OS
-//          allows it, this function can allocate up to 4 GB of memory.
-//  FPDFBitmap_Create: function(width, height: Integer; alpha: Integer): FPDF_BITMAP; {$IFDEF DLLEXPORT}stdcall{$ELSE}cdecl{$ENDIF};
-//!
-//const
-//  // More DIB formats
-//  FPDFBitmap_Unknown = 0; // Unknown or unsupported format.
-//  FPDFBitmap_Gray    = 1; // Gray scale bitmap, one byte per pixel.
-//  FPDFBitmap_BGR     = 2; // 3 bytes per pixel, byte order: blue, green, red.
-//  FPDFBitmap_BGRx    = 3; // 4 bytes per pixel, byte order: blue, green, red, unused.
-//  FPDFBitmap_BGRA    = 4; // 4 bytes per pixel, byte order: blue, green, red, alpha.
-//
-//// Function: FPDFBitmap_CreateEx
-////          Create a device independent bitmap (FXDIB)
-//// Parameters:
-////          width       -   The number of pixels in width for the bitmap.
-////                          Must be greater than 0.
-////          height      -   The number of pixels in height for the bitmap.
-////                          Must be greater than 0.
-////          format      -   A number indicating for bitmap format, as defined
-////                          above.
-////          first_scan  -   A pointer to the first byte of the first line if
-////                          using an external buffer. If this parameter is NULL,
-////                          then the a new buffer will be created.
-////          stride      -   Number of bytes for each scan line, for external
-////                          buffer only.
-//// Return value:
-////          The bitmap handle, or NULL if parameter error or out of memory.
-//// Comments:
-////          Similar to FPDFBitmap_Create function, but allows for more formats
-////          and an external buffer is supported. The bitmap created by this
-////          function can be used in any place that a FPDF_BITMAP handle is
-////          required.
-////
-////          If an external buffer is used, then the application should destroy
-////          the buffer by itself. FPDFBitmap_Destroy function will not destroy
-////          the buffer.
-//var
-//  FPDFBitmap_CreateEx: function(width, height: Integer; format: Integer; first_scan: Pointer;
-//    stride: Integer): FPDF_BITMAP; {$IFDEF DLLEXPORT}stdcall{$ELSE}cdecl{$ENDIF};
-//
-//end;
-//
-//or
-//// Get the raw image data of |image_object|. The raw data is the image data as
-//// stored in the PDF without applying any filters. |buffer| is only modified if
-//// |buflen| is longer than the length of the raw image data.
-////
-////   image_object - handle to an image object.
-////   buffer       - buffer for holding the raw image data.
-////   buflen       - length of the buffer in bytes.
-////
-//// Returns the length of the raw image data.
-//var
-//  FPDFImageObj_GetImageDataRaw: function(image_object: FPDF_PAGEOBJECT; buffer: Pointer;
-//    buflen: LongWord): LongWord; {$IFDEF DLLEXPORT}stdcall{$ELSE}cdecl{$ENDIF};
 
 procedure TPdfBitmap.FillRect(ALeft, ATop, AWidth, AHeight: Integer; AColor: FPDF_DWORD);
 begin
