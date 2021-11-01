@@ -8,9 +8,8 @@
       <Unit>
         <Filename Value="PdfiumLibExample.dpr"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
-        <CursorPos X="41" Y="22"/>
-        <UsageCount Value="25"/>
+        <CursorPos X="9" Y="14"/>
+        <UsageCount Value="26"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -19,38 +18,36 @@
         <ComponentName Value="frmMain"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="167"/>
         <CursorPos X="29" Y="180"/>
-        <UsageCount Value="25"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="26"/>
       </Unit>
       <Unit>
         <Filename Value="..\Source\PdfiumCore.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="5"/>
-        <TopLine Value="761"/>
-        <CursorPos X="21" Y="807"/>
-        <UsageCount Value="25"/>
-        <Loaded Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="2141"/>
+        <CursorPos X="62" Y="2154"/>
+        <UsageCount Value="26"/>
       </Unit>
       <Unit>
         <Filename Value="..\Source\PdfiumCtrl.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="4"/>
-        <TopLine Value="802"/>
-        <CursorPos X="59" Y="828"/>
-        <UsageCount Value="25"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="736"/>
+        <CursorPos Y="750"/>
+        <UsageCount Value="26"/>
         <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="..\Source\PdfiumLib.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="3"/>
-        <TopLine Value="80"/>
-        <CursorPos X="83" Y="101"/>
-        <UsageCount Value="25"/>
-        <Loaded Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="8697"/>
+        <CursorPos Y="8712"/>
+        <UsageCount Value="26"/>
       </Unit>
       <Unit>
         <Filename Value="..\..\..\tools\fpc\rtl\objpas\math.pp"/>
@@ -71,163 +68,196 @@
       </Unit>
       <Unit>
         <Filename Value="C:\tools\lazarus.latest\fpcsrc\rtl\win\wininc\func.inc"/>
-        <EditorIndex Value="9"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="655"/>
         <CursorPos X="24" Y="661"/>
         <UsageCount Value="12"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="C:\tools\lazarus.latest\lazarus\lcl\include\winapih.inc"/>
-        <EditorIndex Value="8"/>
+        <EditorIndex Value="-1"/>
         <CursorPos Y="40"/>
         <UsageCount Value="12"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="C:\tools\lazarus.latest\lazarus\lcl\include\scrollingwincontrol.inc"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="313"/>
         <CursorPos X="51" Y="336"/>
         <UsageCount Value="11"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="C:\tools\lazarus.latest\lazarus\lcl\include\customdesigncontrol.inc"/>
-        <EditorIndex Value="7"/>
+        <EditorIndex Value="-1"/>
         <CursorPos X="91" Y="10"/>
         <UsageCount Value="11"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="BitMapForm.pas"/>
         <ComponentName Value="BitmapDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="2"/>
-        <CursorPos X="3" Y="6"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="33" Y="11"/>
         <UsageCount Value="10"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
+      <Unit>
+        <Filename Value="..\..\..\tools\lazarus\components\lazutils\laztracer.pas"/>
+        <UnitName Value="LazTracer"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="35"/>
+        <CursorPos Y="50"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\..\tools\lazarus\lcl\include\winapi.inc"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="32"/>
+        <CursorPos Y="47"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\..\tools\lazarus\lcl\interfaces\gtk2\gtk2winapi.inc"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="9647"/>
+        <CursorPos Y="9661"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\..\tools\lazarus\lcl\interfaces\gtk2\gtk2widgetset.inc"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="4265"/>
+        <CursorPos Y="4285"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit>
     </Units>
     <JumpHistory HistoryIndex="29">
       <Position>
-        <Filename Value="MainFrm.pas"/>
-        <Caret Line="63" TopLine="26"/>
-      </Position>
-      <Position>
-        <Filename Value="MainFrm.pas"/>
-        <Caret Line="19" Column="37"/>
-      </Position>
-      <Position>
-        <Filename Value="..\Source\PdfiumLib.pas"/>
-        <Caret Line="101" Column="83" TopLine="80"/>
-      </Position>
-      <Position>
-        <Filename Value="BitMapForm.pas"/>
-        <Caret Line="6" Column="3"/>
-      </Position>
-      <Position>
-        <Filename Value="PdfiumLibExample.dpr"/>
-        <Caret Line="19"/>
+        <Filename Value="..\Source\PdfiumCtrl.pas"/>
+        <Caret Line="783" Column="9" TopLine="766"/>
       </Position>
       <Position>
         <Filename Value="..\Source\PdfiumCtrl.pas"/>
+        <Caret Line="833" TopLine="819"/>
+      </Position>
+      <Position>
+        <Filename Value="..\..\..\tools\lazarus\components\lazutils\laztracer.pas"/>
+        <Caret Line="50" TopLine="35"/>
       </Position>
       <Position>
         <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="17" Column="20"/>
+        <Caret Line="747" Column="89" TopLine="736"/>
       </Position>
       <Position>
         <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="28" Column="19"/>
+        <Caret Line="748" Column="24" TopLine="736"/>
+      </Position>
+      <Position>
+        <Filename Value="..\..\..\tools\lazarus\components\lazutils\laztracer.pas"/>
+        <Caret Line="45" Column="40" TopLine="35"/>
       </Position>
       <Position>
         <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="95" Column="22" TopLine="48"/>
-      </Position>
-      <Position>
-        <Filename Value="..\Source\PdfiumCore.pas"/>
-        <Caret Line="2154" Column="62" TopLine="2141"/>
-      </Position>
-      <Position>
-        <Filename Value="..\Source\PdfiumCore.pas"/>
-        <Caret Line="3373" Column="49" TopLine="3326"/>
-      </Position>
-      <Position>
-        <Filename Value="..\Source\PdfiumCore.pas"/>
-      </Position>
-      <Position>
-        <Filename Value="..\Source\PdfiumCore.pas"/>
-        <Caret Line="18" Column="8"/>
-      </Position>
-      <Position>
-        <Filename Value="..\Source\PdfiumCore.pas"/>
-        <Caret Line="806" Column="11" TopLine="759"/>
+        <Caret Line="748" TopLine="736"/>
       </Position>
       <Position>
         <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="293" Column="20" TopLine="272"/>
+        <Caret Line="750" TopLine="736"/>
       </Position>
       <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="309" Column="28" TopLine="286"/>
+        <Filename Value="..\..\..\tools\lazarus\lcl\include\winapi.inc"/>
+        <Caret Line="47" TopLine="32"/>
       </Position>
       <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
+        <Filename Value="..\..\..\tools\lazarus\lcl\interfaces\gtk2\gtk2winapi.inc"/>
+        <Caret Line="178" TopLine="163"/>
       </Position>
       <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="16" Column="20"/>
+        <Filename Value="..\..\..\tools\lazarus\lcl\interfaces\gtk2\gtk2winapi.inc"/>
+        <Caret Line="9661" TopLine="9647"/>
       </Position>
       <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="27" Column="19"/>
+        <Filename Value="..\..\..\tools\lazarus\lcl\interfaces\gtk2\gtk2widgetset.inc"/>
+        <Caret Line="4239" TopLine="4225"/>
       </Position>
       <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="91" Column="22" TopLine="70"/>
+        <Filename Value="..\..\..\tools\lazarus\lcl\interfaces\gtk2\gtk2widgetset.inc"/>
+        <Caret Line="4243" TopLine="4225"/>
       </Position>
       <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="93" Column="22" TopLine="70"/>
+        <Filename Value="..\..\..\tools\lazarus\lcl\interfaces\gtk2\gtk2widgetset.inc"/>
+        <Caret Line="4245" TopLine="4225"/>
       </Position>
       <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="316" Column="20" TopLine="263"/>
+        <Filename Value="..\..\..\tools\lazarus\lcl\interfaces\gtk2\gtk2widgetset.inc"/>
+        <Caret Line="4251" TopLine="4228"/>
       </Position>
       <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="353" Column="18" TopLine="306"/>
+        <Filename Value="..\..\..\tools\lazarus\lcl\interfaces\gtk2\gtk2widgetset.inc"/>
+        <Caret Line="4252" TopLine="4229"/>
       </Position>
       <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="567" Column="20" TopLine="514"/>
+        <Filename Value="..\..\..\tools\lazarus\lcl\interfaces\gtk2\gtk2widgetset.inc"/>
+        <Caret Line="4253" TopLine="4230"/>
       </Position>
       <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="643" Column="20" TopLine="594"/>
+        <Filename Value="..\..\..\tools\lazarus\lcl\interfaces\gtk2\gtk2widgetset.inc"/>
+        <Caret Line="4255" TopLine="4232"/>
       </Position>
       <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="868" Column="39" TopLine="853"/>
+        <Filename Value="..\..\..\tools\lazarus\lcl\interfaces\gtk2\gtk2widgetset.inc"/>
+        <Caret Line="4261" TopLine="4247"/>
       </Position>
       <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="790" Column="7" TopLine="756"/>
+        <Filename Value="..\..\..\tools\lazarus\lcl\interfaces\gtk2\gtk2widgetset.inc"/>
+        <Caret Line="4262" TopLine="4247"/>
       </Position>
       <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="825" TopLine="785"/>
+        <Filename Value="..\..\..\tools\lazarus\lcl\interfaces\gtk2\gtk2widgetset.inc"/>
+        <Caret Line="4263" TopLine="4247"/>
       </Position>
       <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="875" Column="57" TopLine="826"/>
+        <Filename Value="..\..\..\tools\lazarus\lcl\interfaces\gtk2\gtk2widgetset.inc"/>
+        <Caret Line="4265" TopLine="4247"/>
       </Position>
       <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="828" Column="59" TopLine="802"/>
+        <Filename Value="..\..\..\tools\lazarus\lcl\interfaces\gtk2\gtk2widgetset.inc"/>
+        <Caret Line="4266" TopLine="4247"/>
+      </Position>
+      <Position>
+        <Filename Value="..\..\..\tools\lazarus\lcl\interfaces\gtk2\gtk2widgetset.inc"/>
+        <Caret Line="4272" TopLine="4249"/>
+      </Position>
+      <Position>
+        <Filename Value="..\..\..\tools\lazarus\lcl\interfaces\gtk2\gtk2widgetset.inc"/>
+        <Caret Line="4273" TopLine="4250"/>
+      </Position>
+      <Position>
+        <Filename Value="..\..\..\tools\lazarus\lcl\interfaces\gtk2\gtk2widgetset.inc"/>
+        <Caret Line="4279" TopLine="4265"/>
+      </Position>
+      <Position>
+        <Filename Value="..\..\..\tools\lazarus\lcl\interfaces\gtk2\gtk2widgetset.inc"/>
+        <Caret Line="4280" TopLine="4265"/>
+      </Position>
+      <Position>
+        <Filename Value="..\..\..\tools\lazarus\lcl\interfaces\gtk2\gtk2widgetset.inc"/>
+        <Caret Line="4282" TopLine="4265"/>
+      </Position>
+      <Position>
+        <Filename Value="..\..\..\tools\lazarus\lcl\interfaces\gtk2\gtk2widgetset.inc"/>
+        <Caret Line="4283" TopLine="4265"/>
+      </Position>
+      <Position>
+        <Filename Value="..\..\..\tools\lazarus\lcl\interfaces\gtk2\gtk2widgetset.inc"/>
+        <Caret Line="4285" TopLine="4265"/>
       </Position>
     </JumpHistory>
     <RunParams>
@@ -235,4 +265,15 @@
       <Modes ActiveMode=""/>
     </RunParams>
   </ProjectSession>
+  <Debugging>
+    <BreakPoints>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\Source\PdfiumCtrl.pas"/>
+        <Line Value="750"/>
+      </Item>
+    </BreakPoints>
+  </Debugging>
 </CONFIG>
