@@ -35,7 +35,7 @@ procedure ShowBitmap(owner : TComponent; bmp : TBitMap);
 var
   dlg: TBitmapDialog;
 begin
-  bmp.SaveToFile('c:\temp\dlg.bmp');
+  //bmp.SaveToFile('c:\temp\dlg.bmp');
   dlg := TBitmapDialog.Create(owner);
   try
     dlg.Image1.Picture.Assign(bmp);
