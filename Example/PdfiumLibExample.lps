@@ -9,7 +9,7 @@
         <Filename Value="PdfiumLibExample.dpr"/>
         <IsPartOfProject Value="True"/>
         <CursorPos X="44" Y="25"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="38"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -21,35 +21,35 @@
         <EditorIndex Value="1"/>
         <TopLine Value="167"/>
         <CursorPos X="29" Y="180"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="38"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\Source\PdfiumCore.pas"/>
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
-        <EditorIndex Value="7"/>
-        <TopLine Value="2626"/>
-        <CursorPos X="47" Y="2651"/>
-        <UsageCount Value="25"/>
+        <EditorIndex Value="10"/>
+        <TopLine Value="2664"/>
+        <CursorPos X="30" Y="2686"/>
+        <UsageCount Value="38"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\Source\PdfiumCtrl.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="4"/>
-        <TopLine Value="693"/>
-        <CursorPos X="27" Y="703"/>
-        <UsageCount Value="25"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="755"/>
+        <CursorPos Y="769"/>
+        <UsageCount Value="38"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\Source\PdfiumLib.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="3"/>
-        <TopLine Value="86"/>
-        <CursorPos X="83" Y="101"/>
-        <UsageCount Value="25"/>
+        <TopLine Value="1033"/>
+        <CursorPos X="18" Y="1052"/>
+        <UsageCount Value="38"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -58,7 +58,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="650"/>
         <CursorPos X="3" Y="659"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
@@ -66,39 +66,35 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="40"/>
         <CursorPos X="58" Y="55"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
       <Unit>
         <Filename Value="C:\tools\lazarus.latest\fpcsrc\rtl\win\wininc\func.inc"/>
-        <EditorIndex Value="11"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="655"/>
         <CursorPos X="24" Y="661"/>
-        <UsageCount Value="12"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="11"/>
       </Unit>
       <Unit>
         <Filename Value="C:\tools\lazarus.latest\lazarus\lcl\include\winapih.inc"/>
-        <EditorIndex Value="10"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="87"/>
         <CursorPos X="10" Y="134"/>
-        <UsageCount Value="12"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="11"/>
       </Unit>
       <Unit>
         <Filename Value="C:\tools\lazarus.latest\lazarus\lcl\include\scrollingwincontrol.inc"/>
-        <EditorIndex Value="8"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="313"/>
         <CursorPos X="51" Y="336"/>
-        <UsageCount Value="11"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="10"/>
       </Unit>
       <Unit>
         <Filename Value="C:\tools\lazarus.latest\lazarus\lcl\include\customdesigncontrol.inc"/>
-        <EditorIndex Value="9"/>
+        <EditorIndex Value="-1"/>
         <CursorPos X="91" Y="10"/>
-        <UsageCount Value="11"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="10"/>
       </Unit>
       <Unit>
         <Filename Value="BitMapForm.pas"/>
@@ -106,146 +102,190 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="2"/>
-        <CursorPos X="3" Y="6"/>
-        <UsageCount Value="10"/>
+        <TopLine Value="17"/>
+        <CursorPos X="13" Y="41"/>
+        <UsageCount Value="17"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="C:\tools\lazarus.latest\fpcsrc\rtl\win\wininc\struct.inc"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="235"/>
         <CursorPos X="22" Y="262"/>
-        <UsageCount Value="10"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="9"/>
       </Unit>
       <Unit>
         <Filename Value="C:\tools\lazarus.latest\lazarus\lcl\lcltype.pp"/>
         <UnitName Value="LCLType"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="82"/>
         <CursorPos X="3" Y="108"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\..\tools\lazarus\components\lazutils\laztracer.pas"/>
+        <UnitName Value="LazTracer"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="34"/>
+        <CursorPos Y="50"/>
+        <UsageCount Value="17"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\..\tools\lazarus\lcl\include\winapi.inc"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="910"/>
+        <CursorPos Y="926"/>
+        <UsageCount Value="17"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\..\tools\lazarus\lcl\interfaces\gtk2\gtk2winapi.inc"/>
+        <EditorIndex Value="7"/>
+        <TopLine Value="8005"/>
+        <CursorPos Y="8020"/>
+        <UsageCount Value="17"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\..\tools\lazarus\lcl\interfaces\gtk2\gtk2widgetset.inc"/>
+        <EditorIndex Value="8"/>
+        <TopLine Value="4270"/>
+        <CursorPos X="11" Y="4284"/>
+        <UsageCount Value="17"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\..\..\tools\lazarus\lcl\interfaces\gtk2\gtk2def.pp"/>
+        <UnitName Value="Gtk2Def"/>
+        <EditorIndex Value="9"/>
+        <TopLine Value="256"/>
+        <CursorPos X="5" Y="272"/>
+        <UsageCount Value="17"/>
         <Loaded Value="True"/>
       </Unit>
     </Units>
     <JumpHistory HistoryIndex="29">
       <Position>
         <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="643" Column="20" TopLine="594"/>
+        <Caret Line="770" TopLine="750"/>
       </Position>
       <Position>
         <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="868" Column="39" TopLine="853"/>
-      </Position>
-      <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="790" Column="7" TopLine="756"/>
-      </Position>
-      <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="825" TopLine="785"/>
-      </Position>
-      <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="875" Column="57" TopLine="826"/>
-      </Position>
-      <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="828" Column="59" TopLine="802"/>
-      </Position>
-      <Position>
-        <Filename Value="PdfiumLibExample.dpr"/>
-        <Caret Line="22" Column="41"/>
-      </Position>
-      <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-      </Position>
-      <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="758" Column="28" TopLine="682"/>
-      </Position>
-      <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="714" Column="55" TopLine="695"/>
-      </Position>
-      <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="720" Column="76" TopLine="689"/>
-      </Position>
-      <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="721" Column="30" TopLine="689"/>
-      </Position>
-      <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="720" Column="30" TopLine="692"/>
-      </Position>
-      <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-      </Position>
-      <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="48" Column="16" TopLine="2"/>
-      </Position>
-      <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="512" Column="17" TopLine="490"/>
-      </Position>
-      <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="513" Column="29" TopLine="490"/>
-      </Position>
-      <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="709" Column="19" TopLine="685"/>
-      </Position>
-      <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="720" Column="13" TopLine="691"/>
-      </Position>
-      <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="703" TopLine="676"/>
-      </Position>
-      <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="719" Column="39" TopLine="693"/>
-      </Position>
-      <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="716" Column="32" TopLine="693"/>
-      </Position>
-      <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="703" Column="27" TopLine="693"/>
+        <Caret Line="767" Column="35" TopLine="750"/>
       </Position>
       <Position>
         <Filename Value="..\Source\PdfiumCore.pas"/>
-        <Caret Line="778" Column="49" TopLine="761"/>
+        <Caret Line="2525" TopLine="2509"/>
       </Position>
       <Position>
         <Filename Value="..\Source\PdfiumCore.pas"/>
+        <Caret Line="2530" TopLine="2530"/>
       </Position>
       <Position>
         <Filename Value="..\Source\PdfiumCore.pas"/>
-        <Caret Line="191" Column="22" TopLine="145"/>
+        <Caret Line="2528" TopLine="2512"/>
       </Position>
       <Position>
         <Filename Value="..\Source\PdfiumCore.pas"/>
-        <Caret Line="2639" Column="56" TopLine="2618"/>
+        <Caret Line="2529" TopLine="2512"/>
       </Position>
       <Position>
         <Filename Value="..\Source\PdfiumCore.pas"/>
-        <Caret Line="2662" Column="36" TopLine="2632"/>
+        <Caret Line="2530" TopLine="2512"/>
       </Position>
       <Position>
         <Filename Value="..\Source\PdfiumCore.pas"/>
-        <Caret Line="2663" TopLine="2632"/>
+        <Caret Line="2531" TopLine="2512"/>
       </Position>
       <Position>
         <Filename Value="..\Source\PdfiumCore.pas"/>
-        <Caret Line="2664" TopLine="2632"/>
+        <Caret Line="2532" TopLine="2512"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\PdfiumCore.pas"/>
+        <Caret Line="2533" TopLine="2512"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\PdfiumCore.pas"/>
+        <Caret Line="2534" TopLine="2512"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\PdfiumCore.pas"/>
+        <Caret Line="2535" TopLine="2512"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\PdfiumCore.pas"/>
+        <Caret Line="2536" TopLine="2512"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\PdfiumCore.pas"/>
+        <Caret Line="2563" TopLine="2549"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\PdfiumCtrl.pas"/>
+        <Caret Line="770" TopLine="750"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\PdfiumCtrl.pas"/>
+        <Caret Line="16" Column="38" TopLine="9"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\PdfiumCtrl.pas"/>
+        <Caret Line="139" Column="24" TopLine="115"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\PdfiumCtrl.pas"/>
+        <Caret Line="683" Column="32" TopLine="658"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\PdfiumCtrl.pas"/>
+        <Caret Line="865" Column="16" TopLine="852"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\PdfiumCtrl.pas"/>
+        <Caret Line="147" Column="15" TopLine="133"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\PdfiumCore.pas"/>
+        <Caret Line="252" Column="20" TopLine="237"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\PdfiumCore.pas"/>
+        <Caret Line="2539" Column="15" TopLine="2518"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\PdfiumCore.pas"/>
+        <Caret Line="196" Column="49" TopLine="182"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\PdfiumCore.pas"/>
+        <Caret Line="2699" Column="3" TopLine="2695"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\PdfiumCore.pas"/>
+        <Caret Line="195" Column="15" TopLine="183"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\PdfiumCore.pas"/>
+        <Caret Line="2643" TopLine="2617"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\PdfiumCore.pas"/>
+        <Caret Line="196" Column="14" TopLine="182"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\PdfiumCore.pas"/>
+        <Caret Line="2699" Column="7" TopLine="2671"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\PdfiumCtrl.pas"/>
+        <Caret Line="769" TopLine="755"/>
+      </Position>
+      <Position>
+        <Filename Value="..\Source\PdfiumCore.pas"/>
+        <Caret Line="2693" Column="41" TopLine="2674"/>
       </Position>
     </JumpHistory>
     <RunParams>

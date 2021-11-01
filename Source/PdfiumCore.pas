@@ -13,6 +13,8 @@
   {$DEFINE WINDOWS_RENDER} { but this is done as define for testing}
 {$ENDIF}
 
+{$DEFINE NON_DC_DRAWING}
+
 {
 Only implemented properly on windows:
 * Timers for filling out forms
@@ -166,6 +168,8 @@ type
     procedure Create;
   end;
 
+  { TPdfBitmap }
+
   TPdfBitmap = class(_TPdfBitmapHideCtor)
   private
     FBitmap: FPDF_BITMAP;
@@ -188,7 +192,8 @@ type
     property BytesPerScanline: Integer read FBytesPerScanLine;
     property Bitmap: FPDF_BITMAP read FBitmap;
 
-    function toBitmap : TBitmap;
+    function toBitmap : TBitmap; overload;
+    procedure toBitmap(bmp : TBitmap); overload;
   end;
 
   PPdfFormFillHandler = ^TPdfFormFillHandler;
@@ -2524,6 +2529,20 @@ var
 begin
   Open;
 
+  {$IFDEF NON_DC_DRAWING}
+  PdfBmp := TPdfBitmap.Create(bitmap.Width, bitmap.Height, bfBGRA, BmpBits, bitmap.Width * 4);
+  try
+    if Transparency then
+      PdfBmp.FillRect(0, 0, bitmap.Width, bitmap.Height, $00FFFFFF)
+    else
+      PdfBmp.FillRect(0, 0, bitmap.Width, bitmap.Height, $FFFFFFFF);
+    DrawToPdfBitmap(PdfBmp, 0, 0, bitmap.Width, bitmap.Height, Rotate, Options);
+    DrawFormToPdfBitmap(PdfBmp, 0, 0, bitmap.Width, bitmap.Height, Rotate, Options);
+    PdfBmp.toBitmap(bitmap);
+  finally
+    PdfBmp.Free;
+  end;
+  {$ELSE}
   FillChar(BitmapInfo, SizeOf(BitmapInfo), 0);
   BitmapInfo.bmiHeader.biSize := SizeOf(BitmapInfo);
   BitmapInfo.bmiHeader.biWidth := bitmap.Width;
@@ -2535,18 +2554,18 @@ begin
   Bmp := CreateDIBSection(bitmap.Canvas.handle, BitmapInfo, DIB_RGB_COLORS, BmpBits, 0, 0);
   if Bmp <> 0 then
   begin
+    PdfBmp := TPdfBitmap.Create(bitmap.Width, bitmap.Height, bfBGRA, BmpBits, bitmap.Width * 4);
     try
-      PdfBmp := TPdfBitmap.Create(bitmap.Width, bitmap.Height, bfBGRA, BmpBits, bitmap.Width * 4);
-      try
-        if Transparency then
-          PdfBmp.FillRect(0, 0, bitmap.Width, bitmap.Height, $00FFFFFF)
-        else
-          PdfBmp.FillRect(0, 0, bitmap.Width, bitmap.Height, $FFFFFFFF);
-        DrawToPdfBitmap(PdfBmp, 0, 0, bitmap.Width, bitmap.Height, Rotate, Options);
-        DrawFormToPdfBitmap(PdfBmp, 0, 0, bitmap.Width, bitmap.Height, Rotate, Options);
-      finally
-        PdfBmp.Free;
-      end;
+      if Transparency then
+        PdfBmp.FillRect(0, 0, bitmap.Width, bitmap.Height, $00FFFFFF)
+      else
+        PdfBmp.FillRect(0, 0, bitmap.Width, bitmap.Height, $FFFFFFFF);
+      DrawToPdfBitmap(PdfBmp, 0, 0, bitmap.Width, bitmap.Height, Rotate, Options);
+      DrawFormToPdfBitmap(PdfBmp, 0, 0, bitmap.Width, bitmap.Height, Rotate, Options);
+    finally
+      PdfBmp.Free;
+    end;
+    try
 
       vbmp := TBitmap.Create;
       try
@@ -2560,6 +2579,7 @@ begin
       DeleteObject(Bmp);
     end;
   end;
+  {$ENDIF}
 end;
 
 { _TPdfBitmapHideCtor }
@@ -2594,8 +2614,8 @@ begin
   Create(FPDFBitmap_CreateEx(AWidth, AHeight, Ord(AFormat), nil, 0), True);
 end;
 
-constructor TPdfBitmap.Create(AWidth, AHeight: Integer; AFormat: TPdfBitmapFormat; ABuffer: Pointer;
-  ABytesPerScanLine: Integer);
+constructor TPdfBitmap.Create(AWidth, AHeight: Integer;
+  AFormat: TPdfBitmapFormat; ABuffer: Pointer; ABytesPerScanline: Integer);
 begin
   Create(FPDFBitmap_CreateEx(AWidth, AHeight, Ord(AFormat), ABuffer, ABytesPerScanline), True);
 end;
@@ -2616,6 +2636,17 @@ begin
 end;
 
 function TPdfBitmap.toBitmap: TBitmap;
+begin
+  result := TBitmap.Create;
+  try
+    toBitmap(result);
+  except
+    result.Free;
+    raise;
+  end;
+end;
+
+procedure TPdfBitmap.toBitmap(bmp: TBitmap);
 var
   fmt : Integer;
   p, pt, pl : pByte;
@@ -2623,56 +2654,66 @@ var
   r,g,b : byte;
 begin
   fmt := FPDFBitmap_GetFormat(FBitmap);
-  result := TBitmap.Create;
-  try
-    wt := FPDFBitmap_GetWidth(FBitmap);
-    result.Width := wt;
-    ht := FPDFBitmap_GetHeight(FBitmap);
-    result.Height := ht;
-    stride := FPDFBitmap_GetStride(FBitmap);
-    p := FPDFBitmap_GetBuffer(FBitmap);
-    case fmt of
-      FPDFBitmap_BGR :
+  wt := FPDFBitmap_GetWidth(FBitmap);
+  bmp.Width := wt;
+  ht := FPDFBitmap_GetHeight(FBitmap);
+  bmp.Height := ht;
+  stride := FPDFBitmap_GetStride(FBitmap);
+  p := FPDFBitmap_GetBuffer(FBitmap);
+  case fmt of
+    FPDFBitmap_BGR :
+    begin
+      bmp.PixelFormat := pf24bit;
+      // 3 bytes per pixel, byte order: blue, green, red.
+      for h := 0 to ht - 1 do
       begin
-        // 3 bytes per pixel, byte order: blue, green, red.
-        for h := 0 to result.Height - 1 do
-        begin
-          pt := p;
-          pl := result.ScanLine[h];
-          // same format
-          move(pt^, pl^, result.Width * 3);
-          inc(p, stride);
-        end;
+        pt := p;
+        pl := bmp.ScanLine[h];
+        // same format
+        move(pt^, pl^, wt * 3);
+        inc(p, stride);
       end;
-      FPDFBitmap_Gray :
-      begin
-        // 1 bytes per pixel, byte order: grey.
-        for h := 0 to result.Height - 1 do
-        begin
-          pt := p;
-          pl := result.ScanLine[h];
-          for w := 0 to result.Width - 1 do
-          begin
-            b := pt^;
-            inc(pt);
-            pl^ := b;
-            inc(pl);
-            pl^ := b;
-            inc(pl);
-            pl^ := b;
-            inc(pl);
-          end;
-          inc(p, stride);
-        end;
-      end;
-      else
-        raise Exception.Create('Format '+inttostr(fmt)+' not supported');
     end;
-  except
-    result.Free;
-    raise;
+    FPDFBitmap_BGRA :
+    begin
+    // 4 bytes per pixel, byte order: blue, green, red, alpha
+      bmp.PixelFormat := pf32bit;
+      for h := 0 to ht - 1 do
+      begin
+        pt := p;
+        pl := bmp.ScanLine[h];
+        // same format
+        move(pt^, pl^, wt * 4);
+        inc(p, stride);
+      end;
+    end;
+    FPDFBitmap_Gray :
+    begin
+      // 1 bytes per pixel, byte order: grey.
+      bmp.PixelFormat := pf24bit;
+      for h := 0 to bmp.Height - 1 do
+      begin
+        pt := p;
+        pl := bmp.ScanLine[h];
+        for w := 0 to wt - 1 do
+        begin
+          b := pt^;
+          inc(pt);
+          pl^ := b;
+          inc(pl);
+          pl^ := b;
+          inc(pl);
+          pl^ := b;
+          inc(pl);
+        end;
+        inc(p, stride);
+      end;
+    end;
+    else
+      raise Exception.Create('Format '+inttostr(fmt)+' not supported');
   end;
 end;
+
 // Function: FPDFBitmap_Create
 //          Create a device independent bitmap (FXDIB).
 // Parameters:

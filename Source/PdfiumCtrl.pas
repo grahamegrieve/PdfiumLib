@@ -10,6 +10,9 @@ unit PdfiumCtrl;
 // Show invalidated paint regions. Don't enable this if you aren't trying to optimize the repainting
 {.$DEFINE REPAINTTEST}
 
+// testing...
+{.$.DEFINE NON_DC_DRAWING}
+
 interface
 
 uses
@@ -695,6 +698,7 @@ procedure TPdfControl.DrawPage(DC: HDC; Page: TPdfPage; DirectDrawPage: Boolean)
 
 var
   PageDC: HDC;
+  {$IFDEF DC_DRAWING}
   OldPageBmp: HBITMAP;
   bmi: TBitmapInfo;
   {$IFDEF MSWINDOWS}
@@ -703,7 +707,11 @@ var
   BmpData: LCLType.Bitmap;
   {$ENDIF}
   Bits: Pointer;
+  {$ELSE}
+  bmp : TBitmap;
+  {$ENDIF}
 begin
+  {$IFDEF DC_DRAWING}
   if DirectDrawPage then
   begin
     if FPageBitmap <> 0 then
@@ -753,6 +761,19 @@ begin
       DeleteDC(PageDC);
     end;
   end;
+  {$ELSE}
+  bmp := TBitmap.create;
+  try
+    bmp.Width := FDrawWidth;
+    bmp.Height := FDrawHeight;
+    Page.Draw(bmp);
+    bmp.SaveToFile('/tmp/pdf.bmp');
+    Canvas.Draw(FDrawX, FDrawY, bmp);
+    //bitBlt(DC, FDrawX, FDrawY, FDrawWidth, FDrawHeight, bmp.Canvas.handle, 0, 0, SRCCOPY);
+  finally
+    bmp.free;
+  end;
+  {$ENDIF}
 end;
 
 procedure TPdfControl.Paint;
