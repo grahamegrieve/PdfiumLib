@@ -9,7 +9,7 @@
         <Filename Value="PdfiumLibExample.dpr"/>
         <IsPartOfProject Value="True"/>
         <CursorPos X="44" Y="25"/>
-        <UsageCount Value="43"/>
+        <UsageCount Value="168"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -19,82 +19,37 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="167"/>
-        <CursorPos X="29" Y="180"/>
-        <UsageCount Value="43"/>
+        <TopLine Value="164"/>
+        <CursorPos Y="179"/>
+        <UsageCount Value="168"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\Source\PdfiumCore.pas"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="10"/>
-        <TopLine Value="2647"/>
-        <CursorPos X="40" Y="2648"/>
-        <UsageCount Value="43"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="2519"/>
+        <CursorPos X="21" Y="2523"/>
+        <UsageCount Value="168"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\Source\PdfiumCtrl.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="5"/>
-        <TopLine Value="834"/>
-        <CursorPos X="41" Y="848"/>
-        <UsageCount Value="43"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="696"/>
+        <CursorPos X="19" Y="717"/>
+        <UsageCount Value="168"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\Source\PdfiumLib.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="3"/>
-        <TopLine Value="1033"/>
-        <CursorPos X="18" Y="1052"/>
-        <UsageCount Value="43"/>
+        <TopLine Value="8704"/>
+        <CursorPos X="38" Y="8715"/>
+        <UsageCount Value="168"/>
         <Loaded Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="..\..\..\tools\fpc\rtl\objpas\math.pp"/>
-        <UnitName Value="Math"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="650"/>
-        <CursorPos X="3" Y="659"/>
-        <UsageCount Value="8"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
-      </Unit>
-      <Unit>
-        <Filename Value="..\..\..\tools\fpc\rtl\inc\mathh.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="40"/>
-        <CursorPos X="58" Y="55"/>
-        <UsageCount Value="8"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
-      </Unit>
-      <Unit>
-        <Filename Value="C:\tools\lazarus.latest\fpcsrc\rtl\win\wininc\func.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="655"/>
-        <CursorPos X="24" Y="661"/>
-        <UsageCount Value="10"/>
-      </Unit>
-      <Unit>
-        <Filename Value="C:\tools\lazarus.latest\lazarus\lcl\include\winapih.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="87"/>
-        <CursorPos X="10" Y="134"/>
-        <UsageCount Value="10"/>
-      </Unit>
-      <Unit>
-        <Filename Value="C:\tools\lazarus.latest\lazarus\lcl\include\scrollingwincontrol.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="313"/>
-        <CursorPos X="51" Y="336"/>
-        <UsageCount Value="9"/>
-      </Unit>
-      <Unit>
-        <Filename Value="C:\tools\lazarus.latest\lazarus\lcl\include\customdesigncontrol.inc"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="91" Y="10"/>
-        <UsageCount Value="9"/>
       </Unit>
       <Unit>
         <Filename Value="BitMapForm.pas"/>
@@ -102,190 +57,158 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="8"/>
-        <CursorPos X="44" Y="31"/>
-        <UsageCount Value="19"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="C:\tools\lazarus.latest\fpcsrc\rtl\win\wininc\struct.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="235"/>
-        <CursorPos X="22" Y="262"/>
-        <UsageCount Value="8"/>
-      </Unit>
-      <Unit>
-        <Filename Value="C:\tools\lazarus.latest\lazarus\lcl\lcltype.pp"/>
-        <UnitName Value="LCLType"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="82"/>
-        <CursorPos X="3" Y="108"/>
-        <UsageCount Value="8"/>
-      </Unit>
-      <Unit>
-        <Filename Value="..\..\..\tools\lazarus\components\lazutils\laztracer.pas"/>
-        <UnitName Value="LazTracer"/>
-        <EditorIndex Value="4"/>
-        <TopLine Value="34"/>
-        <CursorPos Y="50"/>
-        <UsageCount Value="19"/>
+        <TopLine Value="14"/>
+        <CursorPos X="32" Y="26"/>
+        <UsageCount Value="81"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="..\..\..\tools\lazarus\lcl\include\winapi.inc"/>
-        <EditorIndex Value="6"/>
-        <TopLine Value="910"/>
-        <CursorPos Y="926"/>
-        <UsageCount Value="19"/>
-        <Loaded Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="..\..\..\tools\lazarus\lcl\interfaces\gtk2\gtk2winapi.inc"/>
+        <Filename Value="..\..\..\tools\lazarus\lcl\include\rasterimage.inc"/>
         <EditorIndex Value="7"/>
-        <TopLine Value="8005"/>
-        <CursorPos Y="8020"/>
-        <UsageCount Value="19"/>
+        <TopLine Value="504"/>
+        <CursorPos Y="518"/>
+        <UsageCount Value="80"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="..\..\..\tools\lazarus\lcl\interfaces\gtk2\gtk2widgetset.inc"/>
+        <Filename Value="..\..\..\tools\lazarus\lcl\include\custombitmap.inc"/>
         <EditorIndex Value="8"/>
-        <TopLine Value="4270"/>
-        <CursorPos X="11" Y="4284"/>
-        <UsageCount Value="19"/>
+        <TopLine Value="482"/>
+        <CursorPos Y="504"/>
+        <UsageCount Value="80"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="..\..\..\tools\lazarus\lcl\interfaces\gtk2\gtk2def.pp"/>
-        <UnitName Value="Gtk2Def"/>
-        <EditorIndex Value="9"/>
-        <TopLine Value="256"/>
-        <CursorPos X="5" Y="272"/>
-        <UsageCount Value="19"/>
+        <Filename Value="..\..\..\fhirserver\library\ftx\ftx_sct_services.pas"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="24"/>
+        <CursorPos X="17" Y="29"/>
+        <UsageCount Value="80"/>
         <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit>
     </Units>
     <JumpHistory HistoryIndex="29">
       <Position>
-        <Filename Value="..\Source\PdfiumCore.pas"/>
-        <Caret Line="2525" TopLine="2509"/>
+        <Filename Value="..\..\..\tools\lazarus\lcl\include\custombitmap.inc"/>
+        <Caret Line="503" TopLine="482"/>
+      </Position>
+      <Position>
+        <Filename Value="..\..\..\tools\lazarus\lcl\include\custombitmap.inc"/>
+        <Caret Line="504" TopLine="482"/>
+      </Position>
+      <Position>
+        <Filename Value="..\..\..\tools\lazarus\lcl\include\rasterimage.inc"/>
+        <Caret Line="518" TopLine="504"/>
+      </Position>
+      <Position>
+        <Filename Value="..\..\..\tools\lazarus\lcl\include\rasterimage.inc"/>
+        <Caret Line="519" TopLine="504"/>
+      </Position>
+      <Position>
+        <Filename Value="..\..\..\tools\lazarus\lcl\include\rasterimage.inc"/>
+        <Caret Line="521" TopLine="504"/>
+      </Position>
+      <Position>
+        <Filename Value="..\..\..\tools\lazarus\lcl\include\rasterimage.inc"/>
+        <Caret Line="522" TopLine="504"/>
       </Position>
       <Position>
         <Filename Value="..\Source\PdfiumCore.pas"/>
-        <Caret Line="2530" TopLine="2530"/>
+        <Caret Line="2533" TopLine="2528"/>
       </Position>
       <Position>
         <Filename Value="..\Source\PdfiumCore.pas"/>
-        <Caret Line="2528" TopLine="2512"/>
+        <Caret Line="2535" Column="26" TopLine="2528"/>
       </Position>
       <Position>
         <Filename Value="..\Source\PdfiumCore.pas"/>
-        <Caret Line="2529" TopLine="2512"/>
+        <Caret Line="2533" TopLine="2528"/>
+      </Position>
+      <Position>
+        <Filename Value="..\..\..\tools\lazarus\lcl\include\rasterimage.inc"/>
+        <Caret Line="518" TopLine="504"/>
       </Position>
       <Position>
         <Filename Value="..\Source\PdfiumCore.pas"/>
-        <Caret Line="2530" TopLine="2512"/>
+        <Caret Line="2533" TopLine="2528"/>
+      </Position>
+      <Position>
+        <Filename Value="..\..\..\tools\lazarus\lcl\include\rasterimage.inc"/>
+        <Caret Line="839" TopLine="825"/>
       </Position>
       <Position>
         <Filename Value="..\Source\PdfiumCore.pas"/>
-        <Caret Line="2531" TopLine="2512"/>
+        <Caret Line="2533" TopLine="2528"/>
+      </Position>
+      <Position>
+        <Filename Value="..\..\..\tools\lazarus\lcl\include\rasterimage.inc"/>
+        <Caret Line="518" TopLine="504"/>
       </Position>
       <Position>
         <Filename Value="..\Source\PdfiumCore.pas"/>
-        <Caret Line="2532" TopLine="2512"/>
+        <Caret Line="2533" TopLine="2528"/>
       </Position>
       <Position>
         <Filename Value="..\Source\PdfiumCore.pas"/>
-        <Caret Line="2533" TopLine="2512"/>
+        <Caret Line="2620" TopLine="2605"/>
       </Position>
       <Position>
         <Filename Value="..\Source\PdfiumCore.pas"/>
-        <Caret Line="2534" TopLine="2512"/>
+        <Caret Line="2533" TopLine="2519"/>
       </Position>
       <Position>
         <Filename Value="..\Source\PdfiumCore.pas"/>
-        <Caret Line="2535" TopLine="2512"/>
+        <Caret Line="2620" TopLine="2606"/>
       </Position>
       <Position>
         <Filename Value="..\Source\PdfiumCore.pas"/>
-        <Caret Line="2536" TopLine="2512"/>
+        <Caret Line="2618" Column="16" TopLine="2590"/>
       </Position>
       <Position>
         <Filename Value="..\Source\PdfiumCore.pas"/>
-        <Caret Line="2563" TopLine="2549"/>
-      </Position>
-      <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="770" TopLine="750"/>
-      </Position>
-      <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="16" Column="38" TopLine="9"/>
-      </Position>
-      <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="139" Column="24" TopLine="115"/>
-      </Position>
-      <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="683" Column="32" TopLine="658"/>
-      </Position>
-      <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="865" Column="16" TopLine="852"/>
-      </Position>
-      <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="147" Column="15" TopLine="133"/>
+        <Caret Line="2597" TopLine="2590"/>
       </Position>
       <Position>
         <Filename Value="..\Source\PdfiumCore.pas"/>
-        <Caret Line="252" Column="20" TopLine="237"/>
+        <Caret Line="2598" TopLine="2590"/>
       </Position>
       <Position>
         <Filename Value="..\Source\PdfiumCore.pas"/>
-        <Caret Line="2539" Column="15" TopLine="2518"/>
+        <Caret Line="2599" TopLine="2590"/>
       </Position>
       <Position>
         <Filename Value="..\Source\PdfiumCore.pas"/>
-        <Caret Line="196" Column="49" TopLine="182"/>
+        <Caret Line="2601" TopLine="2590"/>
       </Position>
       <Position>
         <Filename Value="..\Source\PdfiumCore.pas"/>
-        <Caret Line="2699" Column="3" TopLine="2695"/>
+        <Caret Line="2602" TopLine="2590"/>
       </Position>
       <Position>
         <Filename Value="..\Source\PdfiumCore.pas"/>
-        <Caret Line="195" Column="15" TopLine="183"/>
+        <Caret Line="2603" TopLine="2590"/>
       </Position>
       <Position>
         <Filename Value="..\Source\PdfiumCore.pas"/>
-        <Caret Line="2643" TopLine="2617"/>
+        <Caret Line="2605" TopLine="2590"/>
       </Position>
       <Position>
         <Filename Value="..\Source\PdfiumCore.pas"/>
-        <Caret Line="196" Column="14" TopLine="182"/>
+        <Caret Line="2621" TopLine="2607"/>
       </Position>
       <Position>
         <Filename Value="..\Source\PdfiumCore.pas"/>
-        <Caret Line="2699" Column="7" TopLine="2671"/>
-      </Position>
-      <Position>
-        <Filename Value="..\Source\PdfiumCtrl.pas"/>
-        <Caret Line="769" TopLine="755"/>
+        <Caret Line="2533" TopLine="2519"/>
       </Position>
       <Position>
         <Filename Value="..\Source\PdfiumCore.pas"/>
-        <Caret Line="2693" Column="41" TopLine="2674"/>
+        <Caret Line="2534" TopLine="2519"/>
       </Position>
       <Position>
         <Filename Value="..\Source\PdfiumCore.pas"/>
-        <Caret Line="2686" Column="30" TopLine="2664"/>
-      </Position>
-      <Position>
-        <Filename Value="BitMapForm.pas"/>
-        <Caret Line="31" Column="44" TopLine="17"/>
+        <Caret Line="2535" TopLine="2519"/>
       </Position>
     </JumpHistory>
     <RunParams>

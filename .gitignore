@@ -65,3 +65,9 @@ __history/
 /Example/lib/x86_64-darwin
 /Example/lib/x86_64-linux
 /Package/lib/x86_64-linux
+
+.DS_Store
+
+Example/lib/aarch64-darwin
+
+Package/lib
